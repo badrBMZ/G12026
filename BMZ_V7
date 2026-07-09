@@ -1,0 +1,4016 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="BMZ"/>
+<meta name="theme-color" content="#060e17"/>
+<title>BMZ</title>
+<style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#060e17;overflow-x:hidden;-webkit-text-size-adjust:100%;}input,button,select,textarea{font-family:inherit;}</style>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- React أولاً -->
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+<!-- بعد تحميل React نشغّل الكود -->
+<script>
+window.addEventListener('load', function() {
+  const { useState, useEffect, createContext, useContext } = React;
+
+  try {
+"use strict";
+
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+// ─── STORAGE ──────────────────────────────────────────
+var SK_B = "bmz_bookings",
+  SK_E = "bmz_expenses",
+  SK_N = "bmz_appname",
+  SK_T = "bmz_theme";
+
+// ─── THEMES ───────────────────────────────────────────
+var THEMES = {
+  dark: {
+    bg: "#060e17",
+    card: "#0f1923",
+    card2: "#1a2533",
+    gold: "#c9a84c",
+    gold2: "#f0d080",
+    text: "#f0e6c8",
+    sub: "#8899aa",
+    sub2: "#667788",
+    border: "#1e2d3d",
+    inputBg: "#1a2533",
+    inputText: "#f0e6c8",
+    headerBg: "linear-gradient(135deg,#0f1923 0%,#1a2e42 100%)",
+    shadow: "0 4px 30px rgba(0,0,0,0.5)",
+    statBg: "linear-gradient(145deg,#0f1923,#1a2533)",
+    cardBg: "linear-gradient(145deg,#0f1923,#141f2e)",
+    danger: "#ff5555",
+    dangerBg: "#1a0000",
+    green: "#4caf50",
+    greenBg: "#0a1f0a",
+    blue: "#2196f3",
+    blueBg: "#040f1a",
+    amber: "#ff9800",
+    amberBg: "#1a1000",
+    radial: "radial-gradient(ellipse at 20% 20%,#0d1f2e 0%,#060e17 60%)"
+  },
+  light: {
+    bg: "#f0f4f8",
+    card: "#ffffff",
+    card2: "#e8edf4",
+    gold: "#9a7010",
+    gold2: "#c49820",
+    text: "#1a2533",
+    sub: "#5a6a7a",
+    sub2: "#7a8a9a",
+    border: "#c8d4e0",
+    inputBg: "#ffffff",
+    inputText: "#1a2533",
+    headerBg: "linear-gradient(135deg,#ffffff 0%,#e8edf4 100%)",
+    shadow: "0 4px 20px rgba(0,0,0,0.08)",
+    statBg: "linear-gradient(145deg,#ffffff,#e8edf4)",
+    cardBg: "linear-gradient(145deg,#ffffff,#f4f7fa)",
+    danger: "#d32f2f",
+    dangerBg: "#fff0f0",
+    green: "#2e7d32",
+    greenBg: "#f0fff0",
+    blue: "#1565c0",
+    blueBg: "#f0f4ff",
+    amber: "#e65100",
+    amberBg: "#fff8f0",
+    radial: "none"
+  }
+};
+var ThemeCtx = createContext(THEMES.dark);
+var useT = function useT() {
+  return useContext(ThemeCtx);
+};
+
+// ─── HELPERS ──────────────────────────────────────────
+var fc = function fc(n) {
+  return new Intl.NumberFormat("ar-SA", {
+    style: "currency",
+    currency: "SAR",
+    minimumFractionDigits: 0
+  }).format(n || 0);
+};
+var todayStr = function todayStr() {
+  return new Date().toISOString().split("T")[0];
+};
+var tmrwStr = function tmrwStr() {
+  var d = new Date();
+  d.setDate(d.getDate() + 1);
+  return d.toISOString().split("T")[0];
+};
+var isTmrw = function isTmrw(s, e) {
+  var t = tmrwStr();
+  return t >= s && t <= (e || s);
+};
+var isPast = function isPast(e) {
+  return (e || "") < todayStr();
+};
+var isNow = function isNow(s, e) {
+  var t = todayStr();
+  return t >= s && t <= (e || s);
+};
+var dur = function dur(s, e) {
+  if (!s || !e) return 1;
+  var d = Math.round((new Date(e) - new Date(s)) / 86400000) + 1;
+  return d > 0 ? d : 1;
+};
+var overlap = function overlap(s1, e1, s2, e2) {
+  return s1 <= e2 && s2 <= e1;
+};
+var getConf = function getConf(bks, s, e, xid) {
+  if (!s || !e) return [];
+  return bks.filter(function (b) {
+    if (b.id === xid || b.confirmed) return false;
+    return overlap(s, e, b.startDate, b.endDate || b.startDate);
+  });
+};
+var mKey = function mKey(d) {
+  return d ? d.substring(0, 7) : "";
+};
+var AM = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+var DAR = ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"];
+
+// Booking color by status
+var bColor = function bColor(b, T) {
+  var rem = Math.max(0, b.totalAmount - b.paidAmount);
+  var pct = b.totalAmount > 0 ? Math.round(b.paidAmount / b.totalAmount * 100) : 0;
+  // خلفية تتغير حسب نسبة الدفع
+  var payBg = pct === 0 ? "#1a0505" // أحمر داكن = لا يوجد دفع
+  : pct < 50 ? "#1a0e00" // برتقالي داكن = أقل من نصف
+  : pct < 100 ? "#0d1a00" // أخضر داكن = أكثر من نصف
+  : "#041a04"; // أخضر = مدفوع كامل
+  if (b.confirmed) return {
+    border: T.green,
+    bg: "#041a04",
+    label: "✓ مكتمل",
+    lbg: "#0d3d0d",
+    pct: 100
+  };
+  if (isPast(b.endDate || b.startDate)) return {
+    border: T.danger,
+    bg: payBg,
+    label: "⏰ منتهي",
+    lbg: "#2a0808",
+    pct: pct
+  };
+  if (rem === 0) return {
+    border: T.blue,
+    bg: "#041020",
+    label: "💰 مدفوع كامل",
+    lbg: "#082244",
+    pct: 100
+  };
+  if (isNow(b.startDate, b.endDate || b.startDate)) return {
+    border: T.gold,
+    bg: payBg,
+    label: "🟡 جارٍ الآن",
+    lbg: "#2a2000",
+    pct: pct
+  };
+  return {
+    border: T.amber,
+    bg: payBg,
+    label: "⏳ متبقي مبلغ",
+    lbg: "#2a1400",
+    pct: pct
+  };
+};
+
+// ─── SHARED UI ────────────────────────────────────────
+function Modal(_ref) {
+  var open = _ref.open,
+    onClose = _ref.onClose,
+    children = _ref.children;
+  var T = useT();
+  if (!open) return null;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "fixed",
+      inset: 0,
+      background: "rgba(0,0,0,0.75)",
+      zIndex: 200,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "16px",
+      backdropFilter: "blur(6px)"
+    },
+    onClick: onClose
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: T.card,
+      border: "1px solid ".concat(T.gold),
+      borderRadius: "18px",
+      padding: "24px",
+      width: "100%",
+      maxWidth: "430px",
+      maxHeight: "90vh",
+      overflowY: "auto",
+      boxShadow: "0 0 60px ".concat(T.gold, "22")
+    },
+    onClick: function onClick(e) {
+      return e.stopPropagation();
+    }
+  }, children));
+}
+function SubHeader(_ref2) {
+  var title = _ref2.title,
+    sub = _ref2.sub,
+    onBack = _ref2.onBack,
+    rightBtn = _ref2.rightBtn;
+  var T = useT();
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: T.headerBg,
+      borderBottom: "2px solid ".concat(T.gold),
+      padding: "18px 20px",
+      position: "sticky",
+      top: 0,
+      zIndex: 50,
+      boxShadow: T.shadow
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: "12px"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: onBack,
+    style: {
+      background: T.card2,
+      border: "1px solid ".concat(T.gold, "44"),
+      borderRadius: "10px",
+      padding: "8px 14px",
+      color: T.gold,
+      fontSize: "14px",
+      cursor: "pointer",
+      fontWeight: "700"
+    }
+  }, "\u2190 \u0631\u062C\u0648\u0639"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "17px",
+      fontWeight: "900",
+      background: "linear-gradient(135deg,".concat(T.gold, ",").concat(T.gold2, ")"),
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent"
+    }
+  }, title), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub,
+      fontSize: "11px"
+    }
+  }, sub))), rightBtn));
+}
+function MonthPicker(_ref3) {
+  var selYear = _ref3.selYear,
+    selMonth = _ref3.selMonth,
+    setSelYear = _ref3.setSelYear,
+    setSelMonth = _ref3.setSelMonth,
+    years = _ref3.years;
+  var T = useT();
+  var prev = function prev() {
+    if (selMonth === 0) {
+      setSelMonth(11);
+      setSelYear(function (y) {
+        return y - 1;
+      });
+    } else setSelMonth(function (m) {
+      return m - 1;
+    });
+  };
+  var next = function next() {
+    if (selMonth === 11) {
+      setSelMonth(0);
+      setSelYear(function (y) {
+        return y + 1;
+      });
+    } else setSelMonth(function (m) {
+      return m + 1;
+    });
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: T.card2,
+      border: "1px solid ".concat(T.gold, "44"),
+      borderRadius: "16px",
+      padding: "14px",
+      marginBottom: "16px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: "10px"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: prev,
+    style: {
+      background: "none",
+      border: "1px solid ".concat(T.gold, "33"),
+      borderRadius: "10px",
+      width: "38px",
+      height: "38px",
+      color: T.gold,
+      fontSize: "18px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }
+  }, "\u2039"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.text,
+      fontWeight: "900",
+      fontSize: "20px"
+    }
+  }, AM[selMonth]), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.gold,
+      fontSize: "13px",
+      fontWeight: "700"
+    }
+  }, selYear)), /*#__PURE__*/React.createElement("button", {
+    onClick: next,
+    style: {
+      background: "none",
+      border: "1px solid ".concat(T.gold, "33"),
+      borderRadius: "10px",
+      width: "38px",
+      height: "38px",
+      color: T.gold,
+      fontSize: "18px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }
+  }, "\u203A")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "6px",
+      justifyContent: "center",
+      flexWrap: "wrap"
+    }
+  }, years.map(function (y) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: y,
+      onClick: function onClick() {
+        return setSelYear(y);
+      },
+      style: {
+        padding: "3px 12px",
+        borderRadius: "20px",
+        border: "none",
+        background: y === selYear ? "linear-gradient(135deg,".concat(T.gold, ",").concat(T.gold2, ")") : T.card,
+        color: y === selYear ? "#0f1923" : T.sub,
+        fontWeight: "700",
+        fontSize: "12px",
+        cursor: "pointer",
+        outline: y === selYear ? "none" : "1px solid ".concat(T.border)
+      }
+    }, y);
+  })));
+}
+
+// ─── MINI CALENDAR (inside form) ──────────────────────
+function MiniCalendar(_ref4) {
+  var bookings = _ref4.bookings,
+    excludeId = _ref4.excludeId,
+    selStart = _ref4.selStart,
+    selEnd = _ref4.selEnd,
+    onStart = _ref4.onStart,
+    onEnd = _ref4.onEnd;
+  var T = useT();
+  var now = new Date();
+  var _useState = useState(now.getFullYear()),
+    _useState2 = _slicedToArray(_useState, 2),
+    cy = _useState2[0],
+    setCy = _useState2[1];
+  var _useState3 = useState(now.getMonth()),
+    _useState4 = _slicedToArray(_useState3, 2),
+    cm = _useState4[0],
+    setCm = _useState4[1];
+  var first = new Date(cy, cm, 1).getDay();
+  var days = new Date(cy, cm + 1, 0).getDate();
+  var prevM = function prevM() {
+    if (cm === 0) {
+      setCm(11);
+      setCy(function (y) {
+        return y - 1;
+      });
+    } else setCm(function (m) {
+      return m - 1;
+    });
+  };
+  var nextM = function nextM() {
+    if (cm === 11) {
+      setCm(0);
+      setCy(function (y) {
+        return y + 1;
+      });
+    } else setCm(function (m) {
+      return m + 1;
+    });
+  };
+  var ds = function ds(d) {
+    return "".concat(cy, "-").concat(String(cm + 1).padStart(2, "0"), "-").concat(String(d).padStart(2, "0"));
+  };
+  var booked = function booked(d) {
+    return bookings.filter(function (b) {
+      if (b.id === excludeId || b.confirmed) return false;
+      var s = ds(d);
+      return s >= b.startDate && s <= (b.endDate || b.startDate);
+    });
+  };
+  var inSel = function inSel(d) {
+    var s = ds(d);
+    if (selStart && selEnd) return s >= selStart && s <= selEnd;
+    return s === selStart;
+  };
+  var press = function press(d) {
+    var bks = booked(d);
+    if (bks.length > 0) return;
+    var s = ds(d);
+    if (!selStart || selStart && selEnd) {
+      onStart(s);
+      onEnd("");
+    } else {
+      if (s < selStart) {
+        onStart(s);
+        onEnd("");
+      } else {
+        onEnd(s);
+      }
+    }
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: T.card2,
+      borderRadius: "14px",
+      padding: "12px",
+      marginBottom: "12px",
+      border: "1px solid ".concat(T.gold, "33")
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: "8px"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: prevM,
+    style: {
+      background: "none",
+      border: "none",
+      color: T.gold,
+      fontSize: "20px",
+      cursor: "pointer",
+      padding: "4px 10px"
+    }
+  }, "\u2039"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.text,
+      fontWeight: "700",
+      fontSize: "14px"
+    }
+  }, AM[cm], " ", cy), /*#__PURE__*/React.createElement("button", {
+    onClick: nextM,
+    style: {
+      background: "none",
+      border: "none",
+      color: T.gold,
+      fontSize: "20px",
+      cursor: "pointer",
+      padding: "4px 10px"
+    }
+  }, "\u203A")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "repeat(7,1fr)",
+      gap: "2px",
+      marginBottom: "4px"
+    }
+  }, DAR.map(function (d) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: d,
+      style: {
+        textAlign: "center",
+        color: T.sub2,
+        fontSize: "9px",
+        fontWeight: "700"
+      }
+    }, d[0]);
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "repeat(7,1fr)",
+      gap: "2px"
+    }
+  }, Array.from({
+    length: first
+  }).map(function (_, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: "e" + i
+    });
+  }), Array.from({
+    length: days
+  }).map(function (_, i) {
+    var d = i + 1,
+      bks = booked(d),
+      isB = bks.length > 0;
+    var s = ds(d),
+      isSel = inSel(d),
+      isS = s === selStart,
+      isE = s === selEnd,
+      isTd = s === todayStr();
+    var bg = isB ? "#cc1111" : isS || isE ? T.gold : isSel ? T.gold + "44" : T.card;
+    var textCol = isB ? "white" : isS || isE ? "#0f1923" : isTd && !isSel ? T.gold : T.text;
+    return /*#__PURE__*/React.createElement("div", {
+      key: d,
+      onClick: isB ? undefined : function () {
+        return press(d);
+      },
+      style: {
+        background: isB ? "#8b0000" : bg,
+        border: isTd && !isB && !isSel ? "2px solid ".concat(T.gold) : isB ? "2px solid #cc0000" : "1px solid ".concat(T.border, "33"),
+        borderRadius: "6px",
+        padding: "3px 1px",
+        minHeight: "38px",
+        textAlign: "center",
+        cursor: isB ? "not-allowed" : "pointer",
+        boxShadow: isB ? "0 0 8px #cc000066" : "none",
+        userSelect: "none"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: isB ? "#ffaaaa" : textCol,
+        fontWeight: "700",
+        fontSize: "11px",
+        lineHeight: "14px"
+      }
+    }, d), isB && /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "8px",
+        color: "white",
+        fontWeight: "800",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        padding: "0 2px",
+        lineHeight: "12px",
+        textShadow: "0 1px 2px rgba(0,0,0,0.5)"
+      }
+    }, bks[0].name || "محجوز"), isB && bks.length > 1 && /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "7px",
+        color: "#ffcccc",
+        lineHeight: "10px"
+      }
+    }, "+", bks.length - 1));
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "8px",
+      marginTop: "8px",
+      flexWrap: "wrap"
+    }
+  }, [{
+    c: "#cc1111",
+    l: "محجوز"
+  }, {
+    c: T.gold,
+    l: "مختار"
+  }, {
+    c: T.gold + "44",
+    l: "الفترة"
+  }].map(function (x, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: "3px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: "10px",
+        height: "10px",
+        borderRadius: "2px",
+        background: x.c
+      }
+    }), /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: T.sub,
+        fontSize: "9px"
+      }
+    }, x.l));
+  })));
+}
+
+// ─── CALENDAR SCREEN ──────────────────────────────────
+function CalendarView(_ref5) {
+  var bookings = _ref5.bookings,
+    onBack = _ref5.onBack;
+  var T = useT();
+  var now = new Date();
+  var _useState5 = useState(now.getFullYear()),
+    _useState6 = _slicedToArray(_useState5, 2),
+    sy = _useState6[0],
+    setSy = _useState6[1];
+  var _useState7 = useState(now.getMonth()),
+    _useState8 = _slicedToArray(_useState7, 2),
+    sm = _useState8[0],
+    setSm = _useState8[1];
+  var years = _toConsumableArray(new Set([].concat(_toConsumableArray(bookings.map(function (b) {
+    var _b$startDate;
+    return (_b$startDate = b.startDate) === null || _b$startDate === void 0 ? void 0 : _b$startDate.substring(0, 4);
+  }).filter(Boolean)), [String(now.getFullYear())]))).map(Number).sort();
+  var first = new Date(sy, sm, 1).getDay();
+  var days = new Date(sy, sm + 1, 0).getDate();
+  var ds = function ds(d) {
+    return "".concat(sy, "-").concat(String(sm + 1).padStart(2, "0"), "-").concat(String(d).padStart(2, "0"));
+  };
+  var bForDay = function bForDay(d) {
+    return bookings.filter(function (b) {
+      var s = ds(d);
+      return s >= b.startDate && s <= (b.endDate || b.startDate) && !b.confirmed;
+    });
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: "100vh",
+      background: T.bg,
+      backgroundImage: T.radial,
+      fontFamily: "'Segoe UI',Tahoma,sans-serif",
+      direction: "rtl"
+    }
+  }, /*#__PURE__*/React.createElement(SubHeader, {
+    title: "\u0627\u0644\u062A\u0642\u0648\u064A\u0645",
+    sub: "\u0627\u0644\u0623\u064A\u0627\u0645 \u0627\u0644\u0645\u062A\u0627\u062D\u0629 \u0648\u063A\u064A\u0631 \u0627\u0644\u0645\u062A\u0627\u062D\u0629",
+    onBack: onBack
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "16px"
+    }
+  }, /*#__PURE__*/React.createElement(MonthPicker, {
+    selYear: sy,
+    selMonth: sm,
+    setSelYear: setSy,
+    setSelMonth: setSm,
+    years: years
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "10px",
+      marginBottom: "14px",
+      flexWrap: "wrap"
+    }
+  }, [{
+    c: "#cc1111",
+    l: "محجوز"
+  }, {
+    c: T.gold,
+    l: "اليوم"
+  }, {
+    c: T.border,
+    l: "متاح"
+  }].map(function (l, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: "5px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: "14px",
+        height: "14px",
+        borderRadius: "4px",
+        background: l.c
+      }
+    }), /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: T.sub,
+        fontSize: "12px"
+      }
+    }, l.l));
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "repeat(7,1fr)",
+      gap: "3px",
+      marginBottom: "3px"
+    }
+  }, DAR.map(function (d) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: d,
+      style: {
+        textAlign: "center",
+        color: T.sub,
+        fontSize: "11px",
+        padding: "4px 0",
+        fontWeight: "600"
+      }
+    }, d);
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "repeat(7,1fr)",
+      gap: "3px"
+    }
+  }, Array.from({
+    length: first
+  }).map(function (_, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: "e" + i
+    });
+  }), Array.from({
+    length: days
+  }).map(function (_, i) {
+    var d = i + 1,
+      bks = bForDay(d),
+      isB = bks.length > 0,
+      isTd = ds(d) === todayStr();
+    return /*#__PURE__*/React.createElement("div", {
+      key: d,
+      style: {
+        background: isB ? "#3a0000" : T.card,
+        border: "2px solid ".concat(isTd ? T.gold : isB ? "#ff3333" : T.border),
+        borderRadius: "8px",
+        padding: "4px 2px",
+        minHeight: "52px",
+        textAlign: "center",
+        cursor: isB ? "not-allowed" : "default",
+        boxShadow: isB ? "0 0 8px #ff333344" : "none"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: isTd ? T.gold : isB ? "#ff6666" : T.text,
+        fontWeight: isTd ? "900" : "600",
+        fontSize: "13px"
+      }
+    }, d), isB && /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: "2px"
+      }
+    }, bks.slice(0, 2).map(function (b) {
+      return /*#__PURE__*/React.createElement("div", {
+        key: b.id,
+        style: {
+          background: "#cc2222",
+          borderRadius: "3px",
+          padding: "1px 3px",
+          fontSize: "8px",
+          color: "white",
+          fontWeight: "700",
+          marginTop: "1px",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap"
+        }
+      }, b.name || "محجوز");
+    }), bks.length > 2 && /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: "white",
+        fontSize: "8px",
+        fontWeight: "700",
+        background: "#aa0000",
+        borderRadius: "3px",
+        marginTop: "1px"
+      }
+    }, "+", bks.length - 2)));
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: "16px",
+      background: T.card,
+      border: "1px solid ".concat(T.danger, "33"),
+      borderRadius: "14px",
+      padding: "14px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.danger,
+      fontWeight: "800",
+      fontSize: "14px",
+      marginBottom: "10px"
+    }
+  }, "\uD83D\uDD34 \u0627\u0644\u0645\u062D\u062C\u0648\u0632 \u0647\u0630\u0627 \u0627\u0644\u0634\u0647\u0631"), bookings.filter(function (b) {
+    var _b$startDate2, _b$endDate;
+    var mk = "".concat(sy, "-").concat(String(sm + 1).padStart(2, "0"));
+    return (((_b$startDate2 = b.startDate) === null || _b$startDate2 === void 0 ? void 0 : _b$startDate2.startsWith(mk)) || ((_b$endDate = b.endDate) === null || _b$endDate === void 0 ? void 0 : _b$endDate.startsWith(mk))) && !b.confirmed;
+  }).length === 0 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub2,
+      fontSize: "13px",
+      textAlign: "center"
+    }
+  }, "\u0644\u0627 \u062A\u0648\u062C\u062F \u062D\u062C\u0648\u0632\u0627\u062A") : bookings.filter(function (b) {
+    var _b$startDate3, _b$endDate2;
+    var mk = "".concat(sy, "-").concat(String(sm + 1).padStart(2, "0"));
+    return (((_b$startDate3 = b.startDate) === null || _b$startDate3 === void 0 ? void 0 : _b$startDate3.startsWith(mk)) || ((_b$endDate2 = b.endDate) === null || _b$endDate2 === void 0 ? void 0 : _b$endDate2.startsWith(mk))) && !b.confirmed;
+  }).map(function (b) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: b.id,
+      style: {
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "8px 0",
+        borderBottom: "1px solid ".concat(T.border)
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.text,
+        fontSize: "13px",
+        fontWeight: "600"
+      }
+    }, b.name || "بدون اسم"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "11px"
+      }
+    }, b.startDate, " \u2192 ", b.endDate || b.startDate)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.gold,
+        fontSize: "12px",
+        fontWeight: "700"
+      }
+    }, dur(b.startDate, b.endDate || b.startDate), " \u0623\u064A\u0627\u0645"));
+  }))));
+}
+
+// ─── FULL REPORT ──────────────────────────────────────
+function FullReport(_ref6) {
+  var bookings = _ref6.bookings,
+    onBack = _ref6.onBack;
+  var T = useT();
+  var _useState9 = useState("all"),
+    _useState0 = _slicedToArray(_useState9, 2),
+    filter = _useState0[0],
+    setFilter = _useState0[1];
+  var filtered = bookings.filter(function (b) {
+    if (filter === "confirmed") return b.confirmed;
+    if (filter === "pending") return !b.confirmed && !isPast(b.endDate || b.startDate);
+    if (filter === "past") return isPast(b.endDate || b.startDate) && !b.confirmed;
+    if (filter === "fullpaid") return Math.max(0, b.totalAmount - b.paidAmount) === 0 && !b.confirmed;
+    return true;
+  }).sort(function (a, b) {
+    return a.startDate.localeCompare(b.startDate);
+  });
+  var tAll = filtered.reduce(function (s, b) {
+      return s + (b.totalAmount || 0);
+    }, 0),
+    tPaid = filtered.reduce(function (s, b) {
+      return s + (b.paidAmount || 0);
+    }, 0),
+    tRem = filtered.reduce(function (s, b) {
+      return s + Math.max(0, b.totalAmount - b.paidAmount);
+    }, 0);
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: "100vh",
+      background: T.bg,
+      backgroundImage: T.radial,
+      fontFamily: "'Segoe UI',Tahoma,sans-serif",
+      direction: "rtl"
+    }
+  }, /*#__PURE__*/React.createElement(SubHeader, {
+    title: "\u062A\u0642\u0631\u064A\u0631 \u0627\u0644\u062D\u062C\u0648\u0632\u0627\u062A \u0627\u0644\u0643\u0627\u0645\u0644",
+    sub: "".concat(filtered.length, " \u062D\u062C\u0632"),
+    onBack: onBack
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "16px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "6px",
+      marginBottom: "14px",
+      flexWrap: "wrap"
+    }
+  }, [{
+    k: "all",
+    l: "الكل"
+  }, {
+    k: "pending",
+    l: "🕐 جارية"
+  }, {
+    k: "confirmed",
+    l: "✅ مكتملة"
+  }, {
+    k: "fullpaid",
+    l: "💰 مدفوع"
+  }, {
+    k: "past",
+    l: "⏰ منتهية"
+  }].map(function (t) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: t.k,
+      onClick: function onClick() {
+        return setFilter(t.k);
+      },
+      style: {
+        padding: "7px 12px",
+        borderRadius: "20px",
+        border: "none",
+        background: filter === t.k ? "linear-gradient(135deg,".concat(T.gold, ",").concat(T.gold2, ")") : T.card2,
+        color: filter === t.k ? "#0f1923" : T.sub,
+        fontWeight: "700",
+        fontSize: "12px",
+        cursor: "pointer",
+        outline: filter === t.k ? "none" : "1px solid ".concat(T.border)
+      }
+    }, t.l);
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr",
+      gap: "8px",
+      marginBottom: "14px"
+    }
+  }, [{
+    l: "الإجمالي",
+    v: fc(tAll),
+    c: T.gold
+  }, {
+    l: "المحصّل",
+    v: fc(tPaid),
+    c: T.green
+  }, {
+    l: "المتبقي",
+    v: fc(tRem),
+    c: T.danger
+  }].map(function (s, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        background: T.card,
+        border: "1px solid ".concat(s.c, "33"),
+        borderRadius: "12px",
+        padding: "12px 8px",
+        textAlign: "center"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: s.c,
+        fontWeight: "800",
+        fontSize: "13px"
+      }
+    }, s.v), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "10px",
+        marginTop: "3px"
+      }
+    }, s.l));
+  })), filtered.length === 0 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center",
+      padding: "40px 0",
+      color: T.sub
+    }
+  }, "\u0644\u0627 \u062A\u0648\u062C\u062F \u062D\u062C\u0648\u0632\u0627\u062A") : filtered.map(function (b, i) {
+    var endD = b.endDate || b.startDate,
+      rem = Math.max(0, b.totalAmount - b.paidAmount),
+      col = bColor(b, T);
+    return /*#__PURE__*/React.createElement("div", {
+      key: b.id,
+      style: {
+        background: col.bg,
+        border: "2px solid ".concat(col.border),
+        borderRadius: "14px",
+        padding: "14px",
+        marginBottom: "10px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        marginBottom: "8px"
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.text,
+        fontWeight: "700",
+        fontSize: "14px"
+      }
+    }, b.name || "بدون اسم"), b.phone && /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "11px"
+      }
+    }, "\uD83D\uDCF1 ", b.phone)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-end",
+        gap: "3px"
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: "11px",
+        fontWeight: "700",
+        color: col.border,
+        background: col.lbg,
+        padding: "3px 8px",
+        borderRadius: "20px",
+        border: "1px solid ".concat(col.border, "44")
+      }
+    }, col.label), /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: T.sub,
+        fontSize: "10px"
+      }
+    }, "#", i + 1))), /*#__PURE__*/React.createElement("div", {
+      style: {
+        background: T.card,
+        borderRadius: "8px",
+        padding: "8px 12px",
+        marginBottom: "8px",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center"
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "10px"
+      }
+    }, "\u0645\u062F\u0629 \u0627\u0644\u062D\u062C\u0632"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.gold,
+        fontSize: "12px",
+        fontWeight: "700"
+      }
+    }, "\uD83D\uDCC5 ", b.startDate, " \u2192 ", endD)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        background: "".concat(T.gold, "22"),
+        border: "1px solid ".concat(T.gold, "44"),
+        borderRadius: "8px",
+        padding: "6px 12px",
+        textAlign: "center"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.gold,
+        fontWeight: "900",
+        fontSize: "18px",
+        lineHeight: 1
+      }
+    }, dur(b.startDate, endD)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "10px"
+      }
+    }, "\u0623\u064A\u0627\u0645"))), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr 1fr",
+        gap: "6px"
+      }
+    }, [{
+      l: "الإجمالي",
+      v: fc(b.totalAmount),
+      c: T.gold
+    }, {
+      l: "المحصّل",
+      v: fc(b.paidAmount),
+      c: T.green
+    }, {
+      l: "المتبقي",
+      v: rem > 0 ? fc(rem) : "✓",
+      c: rem > 0 ? T.danger : T.green
+    }].map(function (x, j) {
+      return /*#__PURE__*/React.createElement("div", {
+        key: j,
+        style: {
+          background: T.card,
+          borderRadius: "8px",
+          padding: "7px",
+          textAlign: "center"
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          color: T.sub,
+          fontSize: "10px"
+        }
+      }, x.l), /*#__PURE__*/React.createElement("div", {
+        style: {
+          color: x.c,
+          fontWeight: "700",
+          fontSize: "12px"
+        }
+      }, x.v));
+    })), /*#__PURE__*/React.createElement("div", {
+      style: {
+        background: T.border,
+        borderRadius: "4px",
+        height: "4px",
+        marginTop: "10px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        height: "100%",
+        borderRadius: "4px",
+        background: rem === 0 ? T.green : "linear-gradient(90deg,".concat(T.green, ",").concat(T.gold, ")"),
+        width: "".concat(Math.min(100, b.totalAmount > 0 ? b.paidAmount / b.totalAmount * 100 : 0), "%")
+      }
+    })));
+  })));
+}
+
+// ─── EXPENSES REPORT ──────────────────────────────────
+function ExpensesReport(_ref7) {
+  var expenses = _ref7.expenses,
+    bookings = _ref7.bookings,
+    onBack = _ref7.onBack;
+  var T = useT();
+  var now = new Date();
+  var _useState1 = useState(now.getFullYear()),
+    _useState10 = _slicedToArray(_useState1, 2),
+    sy = _useState10[0],
+    setSy = _useState10[1];
+  var _useState11 = useState(now.getMonth()),
+    _useState12 = _slicedToArray(_useState11, 2),
+    sm = _useState12[0],
+    setSm = _useState12[1];
+  var mk = "".concat(sy, "-").concat(String(sm + 1).padStart(2, "0"));
+  var mExp = expenses.filter(function (e) {
+    var _e$date;
+    return (_e$date = e.date) === null || _e$date === void 0 ? void 0 : _e$date.startsWith(mk);
+  }).sort(function (a, b) {
+    return a.date.localeCompare(b.date);
+  });
+  var mBk = bookings.filter(function (b) {
+    return b.confirmed && mKey(b.startDate) === mk;
+  });
+  var tExp = mExp.reduce(function (s, e) {
+      return s + (e.amount || 0);
+    }, 0),
+    tInc = mBk.reduce(function (s, b) {
+      return s + (b.paidAmount || 0);
+    }, 0),
+    net = tInc - tExp;
+  var allYears = _toConsumableArray(new Set([].concat(_toConsumableArray(expenses.map(function (e) {
+    var _e$date2;
+    return (_e$date2 = e.date) === null || _e$date2 === void 0 ? void 0 : _e$date2.substring(0, 4);
+  })), _toConsumableArray(bookings.map(function (b) {
+    var _b$startDate4;
+    return (_b$startDate4 = b.startDate) === null || _b$startDate4 === void 0 ? void 0 : _b$startDate4.substring(0, 4);
+  })), [String(now.getFullYear())]).filter(Boolean))).map(Number).sort();
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: "100vh",
+      background: T.bg,
+      backgroundImage: T.radial,
+      fontFamily: "'Segoe UI',Tahoma,sans-serif",
+      direction: "rtl"
+    }
+  }, /*#__PURE__*/React.createElement(SubHeader, {
+    title: "\u0627\u0644\u062A\u0642\u0631\u064A\u0631 \u0627\u0644\u0634\u0647\u0631\u064A",
+    sub: "\u0627\u0644\u0645\u0635\u0631\u0648\u0641\u0627\u062A \u0648\u0627\u0644\u0625\u064A\u0631\u0627\u062F\u0627\u062A",
+    onBack: onBack
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "16px"
+    }
+  }, /*#__PURE__*/React.createElement(MonthPicker, {
+    selYear: sy,
+    selMonth: sm,
+    setSelYear: setSy,
+    setSelMonth: setSm,
+    years: allYears
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr",
+      gap: "8px",
+      marginBottom: "14px"
+    }
+  }, [{
+    i: "💰",
+    l: "الإيرادات",
+    v: fc(tInc),
+    c: T.green
+  }, {
+    i: "💸",
+    l: "المصروفات",
+    v: fc(tExp),
+    c: T.danger
+  }, {
+    i: net >= 0 ? "📈" : "📉",
+    l: "صافي الربح",
+    v: fc(net),
+    c: net >= 0 ? T.green : T.danger
+  }].map(function (s, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        background: T.card,
+        border: "1px solid ".concat(s.c, "33"),
+        borderRadius: "12px",
+        padding: "12px 8px",
+        textAlign: "center"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "20px",
+        marginBottom: "4px"
+      }
+    }, s.i), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: s.c,
+        fontWeight: "800",
+        fontSize: "13px"
+      }
+    }, s.v), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "10px",
+        marginTop: "3px"
+      }
+    }, s.l));
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: T.card,
+      border: "1px solid ".concat(T.green, "33"),
+      borderRadius: "14px",
+      padding: "16px",
+      marginBottom: "14px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.green,
+      fontWeight: "800",
+      fontSize: "14px",
+      marginBottom: "12px"
+    }
+  }, "\u2705 \u0627\u0644\u0625\u064A\u0631\u0627\u062F\u0627\u062A (", mBk.length, ")"), mBk.length === 0 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub2,
+      fontSize: "13px",
+      textAlign: "center"
+    }
+  }, "\u0644\u0627 \u062A\u0648\u062C\u062F") : mBk.map(function (b, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: b.id,
+      style: {
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "8px 0",
+        borderBottom: i < mBk.length - 1 ? "1px solid ".concat(T.border) : "none"
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.text,
+        fontSize: "13px"
+      }
+    }, b.name || "عميل"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "11px"
+      }
+    }, b.startDate, " \u2192 ", b.endDate || b.startDate)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.green,
+        fontWeight: "800"
+      }
+    }, fc(b.paidAmount)));
+  }), mBk.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      marginTop: "10px",
+      paddingTop: "10px",
+      borderTop: "1px solid ".concat(T.gold, "33")
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: T.gold,
+      fontWeight: "700",
+      fontSize: "13px"
+    }
+  }, "\u0627\u0644\u0625\u062C\u0645\u0627\u0644\u064A"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: T.green,
+      fontWeight: "900",
+      fontSize: "15px"
+    }
+  }, fc(tInc)))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: T.card,
+      border: "1px solid ".concat(T.danger, "33"),
+      borderRadius: "14px",
+      padding: "16px",
+      marginBottom: "14px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.danger,
+      fontWeight: "800",
+      fontSize: "14px",
+      marginBottom: "12px"
+    }
+  }, "\uD83D\uDCB8 \u0627\u0644\u0645\u0635\u0631\u0648\u0641\u0627\u062A (", mExp.length, ")"), mExp.length === 0 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub2,
+      fontSize: "13px",
+      textAlign: "center"
+    }
+  }, "\u0644\u0627 \u062A\u0648\u062C\u062F") : mExp.map(function (e, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: e.id,
+      style: {
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "8px 0",
+        borderBottom: i < mExp.length - 1 ? "1px solid ".concat(T.border) : "none"
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.text,
+        fontSize: "13px"
+      }
+    }, e.name), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "11px"
+      }
+    }, e.date)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.danger,
+        fontWeight: "800"
+      }
+    }, fc(e.amount)));
+  }), mExp.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      marginTop: "10px",
+      paddingTop: "10px",
+      borderTop: "1px solid ".concat(T.gold, "33")
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: T.gold,
+      fontWeight: "700",
+      fontSize: "13px"
+    }
+  }, "\u0627\u0644\u0625\u062C\u0645\u0627\u0644\u064A"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: T.danger,
+      fontWeight: "900",
+      fontSize: "15px"
+    }
+  }, fc(tExp)))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "linear-gradient(135deg,".concat(T.card, ",").concat(T.card2, ")"),
+      border: "2px solid ".concat(net >= 0 ? T.green : T.danger, "66"),
+      borderRadius: "16px",
+      padding: "18px",
+      marginBottom: "40px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.gold,
+      fontWeight: "800",
+      fontSize: "15px",
+      marginBottom: "14px",
+      textAlign: "center",
+      borderBottom: "1px solid ".concat(T.gold, "22"),
+      paddingBottom: "10px"
+    }
+  }, "\uD83D\uDCCA \u0645\u0644\u062E\u0635 ", AM[sm], " ", sy), [{
+    l: "إجمالي الإيرادات",
+    v: fc(tInc),
+    c: T.green
+  }, {
+    l: "إجمالي المصروفات",
+    v: fc(tExp),
+    c: T.danger
+  }, {
+    l: "صافي الربح",
+    v: fc(net),
+    c: net >= 0 ? T.green : T.danger,
+    big: true
+  }].map(function (r, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "10px 0",
+        borderBottom: i < 2 ? "1px solid ".concat(T.border) : "none"
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: T.sub,
+        fontSize: "13px"
+      }
+    }, r.l), /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: r.c,
+        fontWeight: "900",
+        fontSize: r.big ? "18px" : "14px"
+      }
+    }, r.v));
+  }))));
+}
+
+// ─── EXPENSES SCREEN ──────────────────────────────────
+function ExpensesScreen(_ref8) {
+  var expenses = _ref8.expenses,
+    setExpenses = _ref8.setExpenses,
+    bookings = _ref8.bookings,
+    onBack = _ref8.onBack;
+  var T = useT();
+  var _useState13 = useState("list"),
+    _useState14 = _slicedToArray(_useState13, 2),
+    screen = _useState14[0],
+    setScreen = _useState14[1];
+  var _useState15 = useState(false),
+    _useState16 = _slicedToArray(_useState15, 2),
+    showForm = _useState16[0],
+    setShowForm = _useState16[1];
+  var _useState17 = useState(null),
+    _useState18 = _slicedToArray(_useState17, 2),
+    editId = _useState18[0],
+    setEditId = _useState18[1];
+  var _useState19 = useState(null),
+    _useState20 = _slicedToArray(_useState19, 2),
+    deleteId = _useState20[0],
+    setDeleteId = _useState20[1];
+  var _useState21 = useState({
+      name: "",
+      amount: "",
+      date: todayStr()
+    }),
+    _useState22 = _slicedToArray(_useState21, 2),
+    form = _useState22[0],
+    setForm = _useState22[1];
+  useEffect(function () {
+    try {
+      localStorage.setItem(SK_E, JSON.stringify(expenses));
+    } catch (_unused) {}
+  }, [expenses]);
+  var save = function save() {
+    if (!form.name || !form.amount || !form.date) return;
+    var prev = expenses.find(function (e) {
+      return e.id === editId;
+    });
+    var entry = {
+      id: editId || Date.now().toString(),
+      name: form.name,
+      amount: parseFloat(form.amount) || 0,
+      date: form.date,
+      createdAt: (prev === null || prev === void 0 ? void 0 : prev.createdAt) || Date.now()
+    };
+    setExpenses(function (p) {
+      return editId ? p.map(function (e) {
+        return e.id === editId ? entry : e;
+      }) : [].concat(_toConsumableArray(p), [entry]);
+    });
+    setForm({
+      name: "",
+      amount: "",
+      date: todayStr()
+    });
+    setEditId(null);
+    setShowForm(false);
+  };
+  if (screen === "report") return /*#__PURE__*/React.createElement(ExpensesReport, {
+    expenses: expenses,
+    bookings: bookings,
+    onBack: function onBack() {
+      return setScreen("list");
+    }
+  });
+  var sorted = _toConsumableArray(expenses).sort(function (a, b) {
+    return b.date.localeCompare(a.date);
+  });
+  var totalAll = expenses.reduce(function (s, e) {
+    return s + (e.amount || 0);
+  }, 0);
+  var inp2 = {
+    background: T.inputBg,
+    border: "1px solid ".concat(T.gold, "44"),
+    borderRadius: "10px",
+    color: T.inputText,
+    padding: "12px 14px",
+    width: "100%",
+    fontSize: "15px",
+    outline: "none",
+    boxSizing: "border-box",
+    fontFamily: "inherit",
+    direction: "rtl"
+  };
+  var lbl2 = {
+    color: T.gold,
+    fontSize: "13px",
+    marginBottom: "6px",
+    display: "block",
+    fontWeight: "600"
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: "100vh",
+      background: T.bg,
+      backgroundImage: T.radial,
+      fontFamily: "'Segoe UI',Tahoma,sans-serif",
+      direction: "rtl"
+    }
+  }, /*#__PURE__*/React.createElement(SubHeader, {
+    title: "\u0627\u0644\u0645\u0635\u0631\u0648\u0641\u0627\u062A",
+    sub: "BMZ",
+    onBack: onBack,
+    rightBtn: /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        gap: "8px"
+      }
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        return setScreen("report");
+      },
+      style: {
+        background: T.card2,
+        border: "1px solid ".concat(T.gold, "44"),
+        borderRadius: "10px",
+        padding: "9px 13px",
+        color: T.gold,
+        fontWeight: "700",
+        fontSize: "13px",
+        cursor: "pointer"
+      }
+    }, "\uD83D\uDCCA"), /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        setForm({
+          name: "",
+          amount: "",
+          date: todayStr()
+        });
+        setEditId(null);
+        setShowForm(true);
+      },
+      style: {
+        background: "linear-gradient(135deg,".concat(T.gold, ",").concat(T.gold2, ")"),
+        border: "none",
+        borderRadius: "10px",
+        padding: "9px 14px",
+        color: "#0f1923",
+        fontWeight: "800",
+        fontSize: "14px",
+        cursor: "pointer"
+      }
+    }, "+ \u0645\u0635\u0631\u0648\u0641"))
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "16px 16px 0"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: T.card,
+      border: "1px solid ".concat(T.danger, "44"),
+      borderRadius: "14px",
+      padding: "16px",
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "12px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub,
+      fontSize: "12px"
+    }
+  }, "\u0625\u062C\u0645\u0627\u0644\u064A"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.danger,
+      fontWeight: "900",
+      fontSize: "20px",
+      marginTop: "4px"
+    }
+  }, fc(totalAll))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub,
+      fontSize: "12px"
+    }
+  }, "\u0627\u0644\u0633\u062C\u0644\u0627\u062A"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.gold,
+      fontWeight: "900",
+      fontSize: "20px",
+      marginTop: "4px"
+    }
+  }, expenses.length)))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "14px 16px 100px"
+    }
+  }, sorted.length === 0 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center",
+      padding: "60px 0",
+      color: T.sub
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "48px"
+    }
+  }, "\uD83D\uDCB8"), /*#__PURE__*/React.createElement("div", null, "\u0644\u0627 \u062A\u0648\u062C\u062F \u0645\u0635\u0631\u0648\u0641\u0627\u062A")) : sorted.map(function (e) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: e.id,
+      style: {
+        background: T.cardBg,
+        border: "1px solid ".concat(T.border),
+        borderRadius: "14px",
+        padding: "14px",
+        marginBottom: "10px",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center"
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.text,
+        fontWeight: "700",
+        fontSize: "15px"
+      }
+    }, e.name), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "12px",
+        marginTop: "3px"
+      }
+    }, "\uD83D\uDCC5 ", e.date)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: "10px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.danger,
+        fontWeight: "900",
+        fontSize: "16px"
+      }
+    }, fc(e.amount)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "4px"
+      }
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        setForm({
+          name: e.name,
+          amount: e.amount,
+          date: e.date
+        });
+        setEditId(e.id);
+        setShowForm(true);
+      },
+      style: {
+        background: T.card2,
+        border: "1px solid ".concat(T.gold, "44"),
+        borderRadius: "6px",
+        padding: "5px 10px",
+        color: T.gold,
+        fontSize: "12px",
+        cursor: "pointer"
+      }
+    }, "\u270F\uFE0F"), /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        return setDeleteId(e.id);
+      },
+      style: {
+        background: T.dangerBg,
+        border: "1px solid ".concat(T.danger, "33"),
+        borderRadius: "6px",
+        padding: "5px 10px",
+        color: T.danger,
+        fontSize: "12px",
+        cursor: "pointer"
+      }
+    }, "\uD83D\uDDD1\uFE0F"))));
+  })), /*#__PURE__*/React.createElement(Modal, {
+    open: showForm,
+    onClose: function onClose() {
+      return setShowForm(false);
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.gold,
+      fontSize: "19px",
+      fontWeight: "800",
+      marginBottom: "20px",
+      textAlign: "center"
+    }
+  }, editId ? "✏️ تعديل" : "➕ مصروف جديد"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: "14px"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: lbl2
+  }, "\u0627\u0633\u0645 \u0627\u0644\u0645\u0635\u0631\u0648\u0641"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    placeholder: "\u0645\u062B\u0627\u0644: \u0635\u064A\u0627\u0646\u0629...",
+    value: form.name,
+    onChange: function onChange(e) {
+      return setForm(function (p) {
+        return _objectSpread(_objectSpread({}, p), {}, {
+          name: e.target.value
+        });
+      });
+    },
+    style: inp2
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: "14px"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: lbl2
+  }, "\u0627\u0644\u0645\u0628\u0644\u063A"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    placeholder: "0",
+    value: form.amount,
+    onChange: function onChange(e) {
+      return setForm(function (p) {
+        return _objectSpread(_objectSpread({}, p), {}, {
+          amount: e.target.value
+        });
+      });
+    },
+    style: inp2
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: "20px"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: lbl2
+  }, "\u0627\u0644\u062A\u0627\u0631\u064A\u062E"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    value: form.date,
+    onChange: function onChange(e) {
+      return setForm(function (p) {
+        return _objectSpread(_objectSpread({}, p), {}, {
+          date: e.target.value
+        });
+      });
+    },
+    style: inp2
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "10px"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: save,
+    style: {
+      flex: 1,
+      padding: "14px",
+      borderRadius: "12px",
+      border: "none",
+      background: "linear-gradient(135deg,".concat(T.gold, ",").concat(T.gold2, ")"),
+      color: "#0f1923",
+      fontWeight: "800",
+      fontSize: "15px",
+      cursor: "pointer"
+    }
+  }, "\u062D\u0641\u0638"), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setShowForm(false);
+    },
+    style: {
+      flex: 1,
+      padding: "14px",
+      borderRadius: "12px",
+      border: "1px solid ".concat(T.border),
+      background: T.card2,
+      color: T.sub,
+      fontSize: "15px",
+      cursor: "pointer"
+    }
+  }, "\u0625\u0644\u063A\u0627\u0621"))), /*#__PURE__*/React.createElement(Modal, {
+    open: !!deleteId,
+    onClose: function onClose() {
+      return setDeleteId(null);
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "52px",
+      marginBottom: "16px"
+    }
+  }, "\uD83D\uDDD1\uFE0F"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.text,
+      fontSize: "18px",
+      fontWeight: "700",
+      marginBottom: "24px"
+    }
+  }, "\u062D\u0630\u0641 \u0627\u0644\u0645\u0635\u0631\u0648\u0641\u061F"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "10px"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      setExpenses(function (p) {
+        return p.filter(function (e) {
+          return e.id !== deleteId;
+        });
+      });
+      setDeleteId(null);
+    },
+    style: {
+      flex: 1,
+      padding: "14px",
+      borderRadius: "12px",
+      border: "none",
+      background: "linear-gradient(135deg,#5a1a1a,#c62828)",
+      color: "white",
+      fontWeight: "800",
+      fontSize: "15px",
+      cursor: "pointer"
+    }
+  }, "\u062D\u0630\u0641"), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setDeleteId(null);
+    },
+    style: {
+      flex: 1,
+      padding: "14px",
+      borderRadius: "12px",
+      border: "1px solid ".concat(T.border),
+      background: T.card2,
+      color: T.sub,
+      fontSize: "15px",
+      cursor: "pointer"
+    }
+  }, "\u0625\u0644\u063A\u0627\u0621")))), /*#__PURE__*/React.createElement("style", null, "input[type=\"date\"]::-webkit-calendar-picker-indicator{filter:".concat(T === THEMES.light ? "none" : "invert(0.7) sepia(1) saturate(3) hue-rotate(5deg)", ";}input::placeholder{color:").concat(T.sub2, ";}*{-webkit-tap-highlight-color:transparent;}")));
+}
+
+// ─── BOOKINGS MONTHLY REPORT ──────────────────────────
+function BookingsMonthlyReport(_ref9) {
+  var bookings = _ref9.bookings,
+    onBack = _ref9.onBack;
+  var T = useT();
+  var now = new Date();
+  var _useState23 = useState(now.getFullYear()),
+    _useState24 = _slicedToArray(_useState23, 2),
+    sy = _useState24[0],
+    setSy = _useState24[1];
+  var _useState25 = useState(now.getMonth()),
+    _useState26 = _slicedToArray(_useState25, 2),
+    sm = _useState26[0],
+    setSm = _useState26[1];
+  var mk = "".concat(sy, "-").concat(String(sm + 1).padStart(2, "0"));
+  var mb = bookings.filter(function (b) {
+    return mKey(b.startDate) === mk;
+  }).sort(function (a, b) {
+    return a.startDate.localeCompare(b.startDate);
+  });
+  var tAmt = mb.reduce(function (s, b) {
+      return s + (b.totalAmount || 0);
+    }, 0),
+    tPaid = mb.reduce(function (s, b) {
+      return s + (b.paidAmount || 0);
+    }, 0),
+    tRem = mb.reduce(function (s, b) {
+      return s + Math.max(0, b.totalAmount - b.paidAmount);
+    }, 0);
+  var confirmed = mb.filter(function (b) {
+      return b.confirmed;
+    }).length,
+    tDays = mb.reduce(function (s, b) {
+      return s + dur(b.startDate, b.endDate || b.startDate);
+    }, 0);
+  var rate = tAmt > 0 ? Math.round(tPaid / tAmt * 100) : 0;
+  var years = _toConsumableArray(new Set(bookings.map(function (b) {
+    var _b$startDate5;
+    return (_b$startDate5 = b.startDate) === null || _b$startDate5 === void 0 ? void 0 : _b$startDate5.substring(0, 4);
+  }).filter(Boolean))).map(Number).sort();
+  if (!years.includes(sy)) years.push(sy);
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: "100vh",
+      background: T.bg,
+      backgroundImage: T.radial,
+      fontFamily: "'Segoe UI',Tahoma,sans-serif",
+      direction: "rtl"
+    }
+  }, /*#__PURE__*/React.createElement(SubHeader, {
+    title: "\u0627\u0644\u062A\u0642\u0631\u064A\u0631 \u0627\u0644\u0634\u0647\u0631\u064A",
+    sub: "\u0627\u0644\u062D\u062C\u0648\u0632\u0627\u062A",
+    onBack: onBack
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "16px"
+    }
+  }, /*#__PURE__*/React.createElement(MonthPicker, {
+    selYear: sy,
+    selMonth: sm,
+    setSelYear: setSy,
+    setSelMonth: setSm,
+    years: years
+  }), mb.length === 0 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center",
+      padding: "60px 0",
+      color: T.sub
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "48px"
+    }
+  }, "\uD83D\uDCCA"), /*#__PURE__*/React.createElement("div", null, "\u0644\u0627 \u062A\u0648\u062C\u062F \u062D\u062C\u0648\u0632\u0627\u062A")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr",
+      gap: "8px",
+      marginBottom: "8px"
+    }
+  }, [{
+    i: "💰",
+    l: "الإجمالي",
+    v: fc(tAmt),
+    c: T.gold
+  }, {
+    i: "✅",
+    l: "المحصّل",
+    v: fc(tPaid),
+    c: T.green
+  }, {
+    i: "⏳",
+    l: "المتبقي",
+    v: fc(tRem),
+    c: T.danger
+  }].map(function (s, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        background: T.card,
+        border: "1px solid ".concat(s.c, "33"),
+        borderRadius: "12px",
+        padding: "12px 8px",
+        textAlign: "center"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "18px",
+        marginBottom: "4px"
+      }
+    }, s.i), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: s.c,
+        fontWeight: "800",
+        fontSize: "13px"
+      }
+    }, s.v), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "10px",
+        marginTop: "3px"
+      }
+    }, s.l));
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr 1fr",
+      gap: "8px",
+      marginBottom: "14px"
+    }
+  }, [{
+    i: "📋",
+    l: "الحجوزات",
+    v: mb.length,
+    c: T.blue
+  }, {
+    i: "✓",
+    l: "مكتملة",
+    v: confirmed,
+    c: T.green
+  }, {
+    i: "🕐",
+    l: "جارية",
+    v: mb.length - confirmed,
+    c: T.amber
+  }, {
+    i: "🌙",
+    l: "الأيام",
+    v: tDays,
+    c: "#ce93d8"
+  }].map(function (s, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        background: T.card,
+        border: "1px solid ".concat(s.c, "33"),
+        borderRadius: "10px",
+        padding: "10px 6px",
+        textAlign: "center"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "16px",
+        marginBottom: "3px"
+      }
+    }, s.i), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: s.c,
+        fontWeight: "800",
+        fontSize: "15px"
+      }
+    }, s.v), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "10px",
+        marginTop: "2px"
+      }
+    }, s.l));
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: T.card,
+      border: "1px solid ".concat(T.gold, "22"),
+      borderRadius: "14px",
+      padding: "14px 16px",
+      marginBottom: "14px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: "8px"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: T.sub,
+      fontSize: "13px"
+    }
+  }, "\u0646\u0633\u0628\u0629 \u0627\u0644\u062A\u062D\u0635\u064A\u0644"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: rate >= 80 ? T.green : rate >= 50 ? T.amber : T.danger,
+      fontWeight: "800",
+      fontSize: "17px"
+    }
+  }, rate, "%")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: T.border,
+      borderRadius: "8px",
+      height: "10px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: "100%",
+      borderRadius: "8px",
+      background: rate >= 80 ? "linear-gradient(90deg,#2e7d32,".concat(T.green, ")") : rate >= 50 ? "linear-gradient(90deg,#e65100,".concat(T.amber, ")") : "linear-gradient(90deg,#b71c1c,".concat(T.danger, ")"),
+      width: "".concat(rate, "%"),
+      transition: "width 0.6s"
+    }
+  }))), mb.map(function (b, i) {
+    var endD = b.endDate || b.startDate,
+      rem = Math.max(0, b.totalAmount - b.paidAmount),
+      d = dur(b.startDate, endD),
+      col = bColor(b, T);
+    return /*#__PURE__*/React.createElement("div", {
+      key: b.id,
+      style: {
+        background: col.bg,
+        border: "2px solid ".concat(col.border),
+        borderRadius: "14px",
+        padding: "14px",
+        marginBottom: "10px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        justifyContent: "space-between",
+        marginBottom: "8px"
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.text,
+        fontWeight: "700",
+        fontSize: "14px"
+      }
+    }, b.name || "بدون اسم"), b.phone && /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "11px"
+      }
+    }, "\uD83D\uDCF1 ", b.phone)), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: "11px",
+        fontWeight: "700",
+        color: col.border,
+        background: col.lbg,
+        padding: "3px 8px",
+        borderRadius: "20px"
+      }
+    }, col.label)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        gap: "6px",
+        alignItems: "center",
+        marginBottom: "8px",
+        background: T.card,
+        borderRadius: "8px",
+        padding: "6px 10px"
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: T.gold,
+        fontSize: "12px"
+      }
+    }, "\uD83D\uDCC5 ", b.startDate, " \u2192 ", endD), /*#__PURE__*/React.createElement("span", {
+      style: {
+        marginRight: "auto",
+        background: "".concat(T.gold, "22"),
+        border: "1px solid ".concat(T.gold, "44"),
+        borderRadius: "6px",
+        padding: "2px 8px",
+        color: T.gold,
+        fontSize: "11px",
+        fontWeight: "700"
+      }
+    }, d, " ", d === 1 ? "يوم" : "أيام")), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr 1fr",
+        gap: "6px"
+      }
+    }, [{
+      l: "الإجمالي",
+      v: fc(b.totalAmount),
+      c: T.gold
+    }, {
+      l: "المحصّل",
+      v: fc(b.paidAmount),
+      c: T.green
+    }, {
+      l: "المتبقي",
+      v: rem > 0 ? fc(rem) : "✓",
+      c: rem > 0 ? T.danger : T.green
+    }].map(function (x, j) {
+      return /*#__PURE__*/React.createElement("div", {
+        key: j,
+        style: {
+          background: T.card,
+          borderRadius: "8px",
+          padding: "7px",
+          textAlign: "center"
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          color: T.sub,
+          fontSize: "10px"
+        }
+      }, x.l), /*#__PURE__*/React.createElement("div", {
+        style: {
+          color: x.c,
+          fontWeight: "700",
+          fontSize: "12px"
+        }
+      }, x.v));
+    })));
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "linear-gradient(135deg,".concat(T.card, ",").concat(T.card2, ")"),
+      border: "2px solid ".concat(T.gold, "44"),
+      borderRadius: "16px",
+      padding: "18px",
+      marginBottom: "40px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.gold,
+      fontWeight: "800",
+      fontSize: "15px",
+      marginBottom: "14px",
+      textAlign: "center",
+      borderBottom: "1px solid ".concat(T.gold, "22"),
+      paddingBottom: "10px"
+    }
+  }, "\uD83D\uDCCA \u0625\u062C\u0645\u0627\u0644\u064A ", AM[sm], " ", sy), [{
+    l: "إجمالي الحجوزات",
+    v: fc(tAmt),
+    c: T.gold
+  }, {
+    l: "المبالغ المحصّلة",
+    v: fc(tPaid),
+    c: T.green
+  }, {
+    l: "المبالغ المتبقية",
+    v: fc(tRem),
+    c: tRem > 0 ? T.danger : T.green
+  }, {
+    l: "عدد الحجوزات",
+    v: "".concat(mb.length, " \u062D\u062C\u0632"),
+    c: T.blue
+  }, {
+    l: "إجمالي الأيام",
+    v: "".concat(tDays, " \u064A\u0648\u0645"),
+    c: "#ce93d8"
+  }, {
+    l: "نسبة التحصيل",
+    v: "".concat(rate, "%"),
+    c: rate >= 80 ? T.green : T.amber
+  }].map(function (r, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "8px 0",
+        borderBottom: i < 5 ? "1px solid ".concat(T.border) : "none"
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: T.sub,
+        fontSize: "13px"
+      }
+    }, r.l), /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: r.c,
+        fontWeight: "800",
+        fontSize: "14px"
+      }
+    }, r.v));
+  })))));
+}
+
+// ─── BOOKINGS SCREEN ──────────────────────────────────
+function BookingsScreen(_ref0) {
+  var _bookings$find;
+  var bookings = _ref0.bookings,
+    setBookings = _ref0.setBookings,
+    onBack = _ref0.onBack;
+  var T = useT();
+  var _useState27 = useState("list"),
+    _useState28 = _slicedToArray(_useState27, 2),
+    screen = _useState28[0],
+    setScreen = _useState28[1];
+  var _useState29 = useState(false),
+    _useState30 = _slicedToArray(_useState29, 2),
+    showForm = _useState30[0],
+    setShowForm = _useState30[1];
+  var _useState31 = useState(null),
+    _useState32 = _slicedToArray(_useState31, 2),
+    editId = _useState32[0],
+    setEditId = _useState32[1];
+  var _useState33 = useState(null),
+    _useState34 = _slicedToArray(_useState33, 2),
+    confirmId = _useState34[0],
+    setConfirmId = _useState34[1];
+  var _useState35 = useState(null),
+    _useState36 = _slicedToArray(_useState35, 2),
+    deleteId = _useState36[0],
+    setDeleteId = _useState36[1];
+  var _useState37 = useState(null),
+    _useState38 = _slicedToArray(_useState37, 2),
+    waBook = _useState38[0],
+    setWaBook = _useState38[1];
+  var _useState39 = useState("upcoming"),
+    _useState40 = _slicedToArray(_useState39, 2),
+    activeTab = _useState40[0],
+    setActiveTab = _useState40[1];
+  var _useState41 = useState({
+      name: "",
+      phone: "",
+      startDate: "",
+      endDate: "",
+      totalAmount: "",
+      paidAmount: ""
+    }),
+    _useState42 = _slicedToArray(_useState41, 2),
+    form = _useState42[0],
+    setForm = _useState42[1];
+  var _useState43 = useState([]),
+    _useState44 = _slicedToArray(_useState43, 2),
+    dConf = _useState44[0],
+    setDConf = _useState44[1];
+  var _useState45 = useState([]),
+    _useState46 = _slicedToArray(_useState45, 2),
+    alerts = _useState46[0],
+    setAlerts = _useState46[1];
+  useEffect(function () {
+    try {
+      localStorage.setItem(SK_B, JSON.stringify(bookings));
+    } catch (_unused2) {}
+    // تنبيهات: غداً + بعد غد + بعد 3 أيام
+    var upcoming = bookings.filter(function (b) {
+      if (b.confirmed) return false;
+      var s = b.startDate;
+      var t = todayStr();
+      var diff = Math.round((new Date(s) - new Date(t)) / 86400000);
+      return diff >= 0 && diff <= 3;
+    });
+    setAlerts(upcoming);
+  }, [bookings]);
+  useEffect(function () {
+    if (form.startDate && form.endDate && form.startDate <= form.endDate) setDConf(getConf(bookings, form.startDate, form.endDate, editId));else setDConf([]);
+  }, [form.startDate, form.endDate, bookings, editId]);
+  var save = function save() {
+    if (!form.startDate || !form.endDate || !form.totalAmount) return;
+    if (form.startDate > form.endDate || dConf.length > 0) return;
+    var prev = bookings.find(function (b) {
+      return b.id === editId;
+    });
+    var entry = {
+      id: editId || Date.now().toString(),
+      name: form.name,
+      phone: form.phone,
+      startDate: form.startDate,
+      endDate: form.endDate,
+      totalAmount: parseFloat(form.totalAmount) || 0,
+      paidAmount: parseFloat(form.paidAmount) || 0,
+      confirmed: (prev === null || prev === void 0 ? void 0 : prev.confirmed) || false,
+      createdAt: (prev === null || prev === void 0 ? void 0 : prev.createdAt) || Date.now()
+    };
+    setBookings(function (p) {
+      return editId ? p.map(function (b) {
+        return b.id === editId ? entry : b;
+      }) : [].concat(_toConsumableArray(p), [entry]);
+    });
+    setForm({
+      name: "",
+      phone: "",
+      startDate: "",
+      endDate: "",
+      totalAmount: "",
+      paidAmount: ""
+    });
+    setEditId(null);
+    setShowForm(false);
+  };
+
+  // WhatsApp - open directly
+  var openWA = function openWA(b) {
+    var rem = Math.max(0, b.totalAmount - b.paidAmount);
+    var name = b.name ? "\u0627\u0644\u0633\u0644\u0627\u0645 \u0639\u0644\u064A\u0643\u0645 ".concat(b.name, "\u060C") : "السلام عليكم،";
+    var msg = "".concat(name, "\n\n\u062A\u0630\u0643\u064A\u0631 \u0628\u0645\u0648\u0639\u062F \u062D\u062C\u0632\u0643:\n\uD83D\uDCC5 \u0645\u0646: ").concat(b.startDate, "\n\uD83D\uDCC5 \u0625\u0644\u0649: ").concat(b.endDate || b.startDate, "\n\uD83C\uDF19 \u0627\u0644\u0645\u062F\u0629: ").concat(dur(b.startDate, b.endDate || b.startDate), " \u0623\u064A\u0627\u0645\n\n\uD83D\uDCB0 \u0625\u062C\u0645\u0627\u0644\u064A \u0627\u0644\u0645\u0628\u0644\u063A: ").concat(fc(b.totalAmount), "\n\u2705 \u0627\u0644\u0645\u0628\u0644\u063A \u0627\u0644\u0645\u062F\u0641\u0648\u0639: ").concat(fc(b.paidAmount), "\n").concat(rem > 0 ? "\u23F3 \u0627\u0644\u0645\u0628\u0644\u063A \u0627\u0644\u0645\u062A\u0628\u0642\u064A: ".concat(fc(rem)) : "✅ تم سداد المبلغ كاملاً", "\n\n\u0634\u0643\u0631\u0627\u064B \u0644\u0643 \uD83D\uDE4F");
+    var phone = b.phone ? b.phone.replace(/\D/g, "") : "";
+    var url = phone ? "https://api.whatsapp.com/send?phone=".concat(phone, "&text=").concat(encodeURIComponent(msg)) : "https://api.whatsapp.com/send?text=".concat(encodeURIComponent(msg));
+    window.location.href = url;
+  };
+  var tPaid = bookings.reduce(function (s, b) {
+      return s + (b.paidAmount || 0);
+    }, 0),
+    tRem = bookings.reduce(function (s, b) {
+      return s + Math.max(0, b.totalAmount - b.paidAmount);
+    }, 0),
+    tAll = bookings.reduce(function (s, b) {
+      return s + (b.totalAmount || 0);
+    }, 0);
+  var filtered = bookings.filter(function (b) {
+    if (activeTab === "upcoming") return !isPast(b.endDate) && !b.confirmed;
+    if (activeTab === "past") return isPast(b.endDate) || b.confirmed;
+    return true;
+  }).sort(function (a, b) {
+    return a.startDate.localeCompare(b.startDate);
+  });
+  var fDur = form.startDate && form.endDate && form.startDate <= form.endDate ? dur(form.startDate, form.endDate) : 0;
+  var inp2 = {
+    background: T.inputBg,
+    border: "1px solid ".concat(T.gold, "44"),
+    borderRadius: "10px",
+    color: T.inputText,
+    padding: "12px 14px",
+    width: "100%",
+    fontSize: "15px",
+    outline: "none",
+    boxSizing: "border-box",
+    fontFamily: "inherit",
+    direction: "rtl"
+  };
+  var lbl2 = {
+    color: T.gold,
+    fontSize: "13px",
+    marginBottom: "6px",
+    display: "block",
+    fontWeight: "600"
+  };
+  if (screen === "report") return /*#__PURE__*/React.createElement(BookingsMonthlyReport, {
+    bookings: bookings,
+    onBack: function onBack() {
+      return setScreen("list");
+    }
+  });
+  if (screen === "fullreport") return /*#__PURE__*/React.createElement(FullReport, {
+    bookings: bookings,
+    onBack: function onBack() {
+      return setScreen("list");
+    }
+  });
+  if (screen === "calendar") return /*#__PURE__*/React.createElement(CalendarView, {
+    bookings: bookings,
+    onBack: function onBack() {
+      return setScreen("list");
+    }
+  });
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: "100vh",
+      background: T.bg,
+      backgroundImage: T.radial,
+      fontFamily: "'Segoe UI',Tahoma,sans-serif",
+      direction: "rtl"
+    }
+  }, /*#__PURE__*/React.createElement(SubHeader, {
+    title: "\u0627\u0644\u062D\u062C\u0648\u0632\u0627\u062A",
+    sub: "BMZ",
+    onBack: onBack,
+    rightBtn: /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        gap: "6px"
+      }
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        return setScreen("calendar");
+      },
+      style: {
+        background: T.card2,
+        border: "1px solid ".concat(T.gold, "44"),
+        borderRadius: "10px",
+        padding: "9px 11px",
+        color: T.gold,
+        fontWeight: "700",
+        fontSize: "13px",
+        cursor: "pointer"
+      }
+    }, "\uD83D\uDCC5"), /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        return setScreen("fullreport");
+      },
+      style: {
+        background: T.card2,
+        border: "1px solid ".concat(T.gold, "44"),
+        borderRadius: "10px",
+        padding: "9px 11px",
+        color: T.gold,
+        fontWeight: "700",
+        fontSize: "13px",
+        cursor: "pointer"
+      }
+    }, "\uD83D\uDCCB"), /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        return setScreen("report");
+      },
+      style: {
+        background: T.card2,
+        border: "1px solid ".concat(T.gold, "44"),
+        borderRadius: "10px",
+        padding: "9px 11px",
+        color: T.gold,
+        fontWeight: "700",
+        fontSize: "13px",
+        cursor: "pointer"
+      }
+    }, "\uD83D\uDCCA"), /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        setForm({
+          name: "",
+          phone: "",
+          startDate: "",
+          endDate: "",
+          totalAmount: "",
+          paidAmount: ""
+        });
+        setEditId(null);
+        setShowForm(true);
+      },
+      style: {
+        background: "linear-gradient(135deg,".concat(T.gold, ",").concat(T.gold2, ")"),
+        border: "none",
+        borderRadius: "10px",
+        padding: "9px 14px",
+        color: "#0f1923",
+        fontWeight: "800",
+        fontSize: "14px",
+        cursor: "pointer"
+      }
+    }, "+"))
+  }), alerts.map(function (b) {
+    var diff = Math.round((new Date(b.startDate) - new Date(todayStr())) / 86400000);
+    var diffLabel = diff === 0 ? "اليوم 🔴" : diff === 1 ? "غداً 🟡" : "\u0628\u0639\u062F ".concat(diff, " \u0623\u064A\u0627\u0645 \uD83D\uDFE0");
+    var bgColor = diff === 0 ? "linear-gradient(135deg,#3a0000,#5a0000)" : diff === 1 ? "linear-gradient(135deg,#2a1a00,#3a2500)" : "linear-gradient(135deg,#1a1a00,#2a2500)";
+    var borderColor = diff === 0 ? "#ff4444" : diff === 1 ? "#ff9800" : "#ffd700";
+    return /*#__PURE__*/React.createElement("div", {
+      key: b.id,
+      style: {
+        margin: "10px 16px 0",
+        background: bgColor,
+        border: "1px solid ".concat(borderColor),
+        borderRadius: "12px",
+        padding: "12px 16px",
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+        animation: "pulse 2s infinite"
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: "22px"
+      }
+    }, "\uD83D\uDD14"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: borderColor,
+        fontWeight: "700",
+        fontSize: "13px"
+      }
+    }, "\u062A\u0646\u0628\u064A\u0647 \u0645\u0648\u0639\u062F \u0642\u0627\u062F\u0645"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: "#ffe0b2",
+        fontSize: "12px",
+        marginTop: "2px"
+      }
+    }, b.name || "عميل", " \u2014 ", diffLabel, " (", b.startDate, ")")));
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "10px 16px 0",
+      display: "flex",
+      gap: "8px",
+      flexWrap: "wrap"
+    }
+  }, [{
+    c: T.green,
+    l: "✓ مكتمل"
+  }, {
+    c: T.blue,
+    l: "💰 مدفوع"
+  }, {
+    c: T.danger,
+    l: "⏰ منتهي"
+  }, {
+    c: T.gold,
+    l: "🟡 جارٍ"
+  }, {
+    c: T.amber,
+    l: "⏳ متبقي"
+  }].map(function (l, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: "4px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: "10px",
+        height: "10px",
+        borderRadius: "3px",
+        background: l.c
+      }
+    }), /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: T.sub,
+        fontSize: "10px"
+      }
+    }, l.l));
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "12px 16px",
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr",
+      gap: "10px"
+    }
+  }, [{
+    l: "إجمالي",
+    v: fc(tAll),
+    c: T.gold
+  }, {
+    l: "الواصل",
+    v: fc(tPaid),
+    c: T.green
+  }, {
+    l: "المتبقي",
+    v: fc(tRem),
+    c: T.danger
+  }].map(function (s, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        background: T.statBg,
+        border: "1px solid ".concat(s.c, "44"),
+        borderRadius: "14px",
+        padding: "14px 10px",
+        textAlign: "center"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: s.c,
+        fontSize: "13px",
+        fontWeight: "800"
+      }
+    }, s.v), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "10px",
+        marginTop: "4px"
+      }
+    }, s.l));
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "0 16px 12px",
+      display: "flex",
+      gap: "8px"
+    }
+  }, [{
+    key: "upcoming",
+    label: "القادمة"
+  }, {
+    key: "past",
+    label: "المنتهية"
+  }, {
+    key: "all",
+    label: "الكل"
+  }].map(function (t) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: t.key,
+      onClick: function onClick() {
+        return setActiveTab(t.key);
+      },
+      style: {
+        flex: 1,
+        padding: "10px",
+        borderRadius: "10px",
+        border: activeTab === t.key ? "none" : "1px solid ".concat(T.border),
+        background: activeTab === t.key ? "linear-gradient(135deg,".concat(T.gold, ",").concat(T.gold2, ")") : T.card,
+        color: activeTab === t.key ? "#0f1923" : T.sub,
+        fontWeight: "700",
+        fontSize: "13px",
+        cursor: "pointer"
+      }
+    }, t.label);
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "0 16px 100px"
+    }
+  }, filtered.length === 0 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center",
+      padding: "60px 0",
+      color: T.sub
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "48px"
+    }
+  }, "\uD83D\uDCCB"), /*#__PURE__*/React.createElement("div", null, "\u0644\u0627 \u062A\u0648\u062C\u062F \u062D\u062C\u0648\u0632\u0627\u062A")) : filtered.map(function (b) {
+    var endD = b.endDate || b.startDate,
+      rem = Math.max(0, b.totalAmount - b.paidAmount),
+      fp = rem === 0;
+    var nc = (isPast(endD) || isNow(b.startDate, endD)) && !b.confirmed;
+    var d = dur(b.startDate, endD),
+      col = bColor(b, T);
+    return /*#__PURE__*/React.createElement("div", {
+      key: b.id,
+      style: {
+        background: col.bg,
+        border: "2px solid ".concat(col.border),
+        borderRadius: "16px",
+        padding: "16px",
+        marginBottom: "12px",
+        position: "relative",
+        overflow: "hidden"
+      }
+    }, col.label && /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: "absolute",
+        top: 0,
+        right: 0,
+        background: col.border,
+        padding: "4px 12px",
+        borderBottomLeftRadius: "10px",
+        fontSize: "11px",
+        color: "white",
+        fontWeight: "700"
+      }
+    }, col.label), isTmrw(b.startDate, endD) && !b.confirmed && /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: "absolute",
+        top: 0,
+        right: 0,
+        background: "#ff9800",
+        padding: "4px 12px",
+        borderBottomLeftRadius: "10px",
+        fontSize: "11px",
+        color: "white",
+        fontWeight: "700"
+      }
+    }, "\u063A\u062F\u0627\u064B \uD83D\uDD14"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginBottom: "12px",
+        paddingTop: col.label || isTmrw(b.startDate, endD) ? "18px" : "0"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.text,
+        fontWeight: "700",
+        fontSize: "17px"
+      }
+    }, b.name || /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: T.sub,
+        fontStyle: "italic"
+      }
+    }, "\u0628\u062F\u0648\u0646 \u0627\u0633\u0645")), b.phone && /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "13px",
+        marginTop: "3px"
+      }
+    }, "\uD83D\uDCF1 ", b.phone)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        background: T.card,
+        borderRadius: "10px",
+        padding: "10px 14px",
+        marginBottom: "12px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "11px",
+        marginBottom: "6px"
+      }
+    }, "\u0645\u062F\u0629 \u0627\u0644\u062D\u062C\u0632"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: "8px"
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub2,
+        fontSize: "10px"
+      }
+    }, "\u0645\u0646"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.gold,
+        fontWeight: "700",
+        fontSize: "13px"
+      }
+    }, "\uD83D\uDCC5 ", b.startDate)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.border,
+        fontSize: "18px"
+      }
+    }, "\u2192"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub2,
+        fontSize: "10px"
+      }
+    }, "\u0625\u0644\u0649"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.gold,
+        fontWeight: "700",
+        fontSize: "13px"
+      }
+    }, "\uD83D\uDCC5 ", endD))), /*#__PURE__*/React.createElement("div", {
+      style: {
+        background: "".concat(T.gold, "22"),
+        border: "1px solid ".concat(T.gold, "66"),
+        borderRadius: "10px",
+        padding: "8px 14px",
+        textAlign: "center",
+        minWidth: "52px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.gold,
+        fontWeight: "900",
+        fontSize: "20px",
+        lineHeight: 1
+      }
+    }, d), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "10px",
+        marginTop: "2px"
+      }
+    }, d === 1 ? "يوم" : "أيام")))), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "8px",
+        marginBottom: "12px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        background: T.card,
+        borderRadius: "10px",
+        padding: "10px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "11px"
+      }
+    }, "\u0625\u062C\u0645\u0627\u0644\u064A"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.gold,
+        fontWeight: "700",
+        fontSize: "15px"
+      }
+    }, fc(b.totalAmount))), /*#__PURE__*/React.createElement("div", {
+      style: {
+        background: T.card,
+        borderRadius: "10px",
+        padding: "10px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "11px"
+      }
+    }, "\u0627\u0644\u0648\u0627\u0635\u0644"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.green,
+        fontWeight: "700",
+        fontSize: "15px"
+      }
+    }, fc(b.paidAmount)))), rem > 0 && /*#__PURE__*/React.createElement("div", {
+      style: {
+        background: T.dangerBg,
+        border: "1px solid ".concat(T.danger, "44"),
+        borderRadius: "10px",
+        padding: "10px",
+        marginBottom: "12px",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center"
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: T.danger,
+        fontSize: "13px"
+      }
+    }, "\u0627\u0644\u0645\u062A\u0628\u0642\u064A"), /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: T.danger,
+        fontWeight: "800",
+        fontSize: "16px"
+      }
+    }, fc(rem))), /*#__PURE__*/React.createElement("div", {
+      style: {
+        background: T.border,
+        borderRadius: "6px",
+        height: "6px",
+        marginBottom: "12px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        height: "100%",
+        borderRadius: "6px",
+        background: fp ? T.green : "linear-gradient(90deg,".concat(T.green, ",").concat(T.gold, ")"),
+        width: "".concat(Math.min(100, b.paidAmount / b.totalAmount * 100), "%"),
+        transition: "width 0.5s"
+      }
+    })), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        gap: "6px"
+      }
+    }, nc && /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        return setConfirmId(b.id);
+      },
+      style: {
+        flex: 2,
+        padding: "10px",
+        borderRadius: "10px",
+        background: "linear-gradient(135deg,#1a3a1a,#2a5a2a)",
+        color: T.green,
+        fontWeight: "700",
+        fontSize: "12px",
+        cursor: "pointer",
+        border: "1px solid ".concat(T.green, "66")
+      }
+    }, "\u2705 \u062A\u0623\u0643\u064A\u062F"), b.phone && /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        return openWA(b);
+      },
+      style: {
+        flex: 1,
+        padding: "10px",
+        borderRadius: "10px",
+        background: "linear-gradient(135deg,#128c7e,#25d366)",
+        border: "none",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }
+    }, /*#__PURE__*/React.createElement("svg", {
+      width: "22",
+      height: "22",
+      viewBox: "0 0 24 24",
+      fill: "white"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+    }))), /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        setForm({
+          name: b.name || "",
+          phone: b.phone || "",
+          startDate: b.startDate,
+          endDate: b.endDate || b.startDate,
+          totalAmount: b.totalAmount,
+          paidAmount: b.paidAmount
+        });
+        setEditId(b.id);
+        setShowForm(true);
+      },
+      style: {
+        flex: 1,
+        padding: "10px",
+        borderRadius: "10px",
+        border: "1px solid ".concat(T.gold, "44"),
+        background: T.card2,
+        color: T.gold,
+        fontWeight: "600",
+        fontSize: "13px",
+        cursor: "pointer"
+      }
+    }, "\u270F\uFE0F"), /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() {
+        return setDeleteId(b.id);
+      },
+      style: {
+        padding: "10px 12px",
+        borderRadius: "10px",
+        border: "1px solid ".concat(T.danger, "33"),
+        background: T.dangerBg,
+        color: T.danger,
+        fontSize: "13px",
+        cursor: "pointer"
+      }
+    }, "\uD83D\uDDD1\uFE0F")));
+  })), /*#__PURE__*/React.createElement(Modal, {
+    open: showForm,
+    onClose: function onClose() {
+      return setShowForm(false);
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.gold,
+      fontSize: "19px",
+      fontWeight: "800",
+      marginBottom: "20px",
+      textAlign: "center"
+    }
+  }, editId ? "✏️ تعديل الحجز" : "➕ حجز جديد"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: "14px"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: lbl2
+  }, "\u0627\u0633\u0645 \u0627\u0644\u0639\u0645\u064A\u0644 ", /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: T.sub,
+      fontWeight: "400"
+    }
+  }, "(\u0627\u062E\u062A\u064A\u0627\u0631\u064A)")), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    placeholder: "\u0627\u062A\u0631\u0643\u0647 \u0641\u0627\u0631\u063A\u0627\u064B \u0625\u0630\u0627 \u0623\u0631\u062F\u062A",
+    value: form.name,
+    onChange: function onChange(e) {
+      return setForm(function (p) {
+        return _objectSpread(_objectSpread({}, p), {}, {
+          name: e.target.value
+        });
+      });
+    },
+    style: inp2
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: "14px"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: lbl2
+  }, "\u0631\u0642\u0645 \u0627\u0644\u062C\u0648\u0627\u0644 ", /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: T.sub,
+      fontWeight: "400"
+    }
+  }, "(\u0627\u062E\u062A\u064A\u0627\u0631\u064A)")), /*#__PURE__*/React.createElement("input", {
+    type: "tel",
+    placeholder: "05XXXXXXXX",
+    value: form.phone,
+    onChange: function onChange(e) {
+      return setForm(function (p) {
+        return _objectSpread(_objectSpread({}, p), {}, {
+          phone: e.target.value
+        });
+      });
+    },
+    style: inp2
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: "8px"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: lbl2
+  }, "\u0627\u062E\u062A\u0631 \u0627\u0644\u062A\u0627\u0631\u064A\u062E \u0645\u0646 \u0627\u0644\u062A\u0642\u0648\u064A\u0645"), /*#__PURE__*/React.createElement(MiniCalendar, {
+    bookings: bookings,
+    excludeId: editId,
+    selStart: form.startDate,
+    selEnd: form.endDate,
+    onStart: function onStart(v) {
+      return setForm(function (p) {
+        return _objectSpread(_objectSpread({}, p), {}, {
+          startDate: v
+        });
+      });
+    },
+    onEnd: function onEnd(v) {
+      return setForm(function (p) {
+        return _objectSpread(_objectSpread({}, p), {}, {
+          endDate: v
+        });
+      });
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "8px",
+      marginBottom: "8px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: T.card2,
+      borderRadius: "8px",
+      padding: "8px",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub,
+      fontSize: "10px"
+    }
+  }, "\u0627\u0644\u0628\u062F\u0627\u064A\u0629"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.gold,
+      fontWeight: "700",
+      fontSize: "13px"
+    }
+  }, form.startDate || "—")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: T.card2,
+      borderRadius: "8px",
+      padding: "8px",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub,
+      fontSize: "10px"
+    }
+  }, "\u0627\u0644\u0646\u0647\u0627\u064A\u0629"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.gold,
+      fontWeight: "700",
+      fontSize: "13px"
+    }
+  }, form.endDate || "—")))), fDur > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: dConf.length > 0 ? T.dangerBg : T.card2,
+      border: "1px solid ".concat(dConf.length > 0 ? T.danger : T.gold, "33"),
+      borderRadius: "10px",
+      padding: "10px 14px",
+      marginBottom: "10px",
+      display: "flex",
+      justifyContent: "space-between"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: T.sub,
+      fontSize: "13px"
+    }
+  }, "\u0627\u0644\u0645\u062F\u0629"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: dConf.length > 0 ? T.danger : T.gold,
+      fontWeight: "800"
+    }
+  }, fDur, " ", fDur === 1 ? "يوم" : "أيام")), dConf.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: T.dangerBg,
+      border: "1px solid ".concat(T.danger),
+      borderRadius: "12px",
+      padding: "12px 14px",
+      marginBottom: "14px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.danger,
+      fontWeight: "800",
+      fontSize: "14px",
+      marginBottom: "6px"
+    }
+  }, "\uD83D\uDD34 \u0627\u0644\u062A\u0627\u0631\u064A\u062E \u063A\u064A\u0631 \u0645\u062A\u0627\u062D!"), dConf.map(function (c) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: c.id,
+      style: {
+        color: T.danger,
+        fontSize: "12px",
+        opacity: 0.8
+      }
+    }, "\u26A0 ", c.name || "عميل", " \u2014 ", c.startDate, " \u0625\u0644\u0649 ", c.endDate || c.startDate);
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: "14px"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: lbl2
+  }, "\u0625\u062C\u0645\u0627\u0644\u064A \u0627\u0644\u0645\u0628\u0644\u063A (\u0631\u064A\u0627\u0644)"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    placeholder: "0",
+    value: form.totalAmount,
+    onChange: function onChange(e) {
+      return setForm(function (p) {
+        return _objectSpread(_objectSpread({}, p), {}, {
+          totalAmount: e.target.value
+        });
+      });
+    },
+    style: inp2
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: "14px"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: lbl2
+  }, "\u0627\u0644\u0645\u0628\u0644\u063A \u0627\u0644\u0648\u0627\u0635\u0644 (\u0631\u064A\u0627\u0644)"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    placeholder: "0",
+    value: form.paidAmount,
+    onChange: function onChange(e) {
+      return setForm(function (p) {
+        return _objectSpread(_objectSpread({}, p), {}, {
+          paidAmount: e.target.value
+        });
+      });
+    },
+    style: inp2
+  })), form.totalAmount && form.paidAmount && /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: T.card2,
+      borderRadius: "10px",
+      padding: "12px",
+      marginBottom: "16px",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: T.sub,
+      fontSize: "13px"
+    }
+  }, "\u0627\u0644\u0645\u062A\u0628\u0642\u064A: "), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: T.danger,
+      fontWeight: "800"
+    }
+  }, fc(Math.max(0, parseFloat(form.totalAmount) - parseFloat(form.paidAmount))))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "10px"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: save,
+    disabled: dConf.length > 0,
+    style: {
+      flex: 1,
+      padding: "14px",
+      borderRadius: "12px",
+      border: "none",
+      background: dConf.length > 0 ? T.card2 : "linear-gradient(135deg,".concat(T.gold, ",").concat(T.gold2, ")"),
+      color: dConf.length > 0 ? T.sub : "#0f1923",
+      fontWeight: "800",
+      fontSize: "15px",
+      cursor: dConf.length > 0 ? "not-allowed" : "pointer"
+    }
+  }, "\u062D\u0641\u0638"), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setShowForm(false);
+    },
+    style: {
+      flex: 1,
+      padding: "14px",
+      borderRadius: "12px",
+      border: "1px solid ".concat(T.border),
+      background: T.card2,
+      color: T.sub,
+      fontSize: "15px",
+      cursor: "pointer"
+    }
+  }, "\u0625\u0644\u063A\u0627\u0621"))), /*#__PURE__*/React.createElement(Modal, {
+    open: !!confirmId,
+    onClose: function onClose() {
+      return setConfirmId(null);
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "52px",
+      marginBottom: "16px"
+    }
+  }, "\u2705"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.text,
+      fontSize: "18px",
+      fontWeight: "700",
+      marginBottom: "8px"
+    }
+  }, "\u0647\u0644 \u062A\u0645 \u0625\u062A\u0645\u0627\u0645 \u0627\u0644\u062D\u062C\u0632\u061F"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub,
+      fontSize: "14px",
+      marginBottom: "24px"
+    }
+  }, ((_bookings$find = bookings.find(function (b) {
+    return b.id === confirmId;
+  })) === null || _bookings$find === void 0 ? void 0 : _bookings$find.name) || "العميل"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "10px"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      setBookings(function (p) {
+        return p.map(function (b) {
+          return b.id === confirmId ? _objectSpread(_objectSpread({}, b), {}, {
+            confirmed: true
+          }) : b;
+        });
+      });
+      setConfirmId(null);
+    },
+    style: {
+      flex: 1,
+      padding: "14px",
+      borderRadius: "12px",
+      border: "none",
+      background: "linear-gradient(135deg,#2a5a2a,#4caf50)",
+      color: "white",
+      fontWeight: "800",
+      fontSize: "15px",
+      cursor: "pointer"
+    }
+  }, "\u0646\u0639\u0645 \u2713"), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setConfirmId(null);
+    },
+    style: {
+      flex: 1,
+      padding: "14px",
+      borderRadius: "12px",
+      border: "1px solid ".concat(T.border),
+      background: T.card2,
+      color: T.sub,
+      fontSize: "15px",
+      cursor: "pointer"
+    }
+  }, "\u0644\u0627")))), /*#__PURE__*/React.createElement(Modal, {
+    open: !!deleteId,
+    onClose: function onClose() {
+      return setDeleteId(null);
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "52px",
+      marginBottom: "16px"
+    }
+  }, "\uD83D\uDDD1\uFE0F"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.text,
+      fontSize: "18px",
+      fontWeight: "700",
+      marginBottom: "24px"
+    }
+  }, "\u062D\u0630\u0641 \u0627\u0644\u062D\u062C\u0632\u061F"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "10px"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      setBookings(function (p) {
+        return p.filter(function (b) {
+          return b.id !== deleteId;
+        });
+      });
+      setDeleteId(null);
+    },
+    style: {
+      flex: 1,
+      padding: "14px",
+      borderRadius: "12px",
+      border: "none",
+      background: "linear-gradient(135deg,#5a1a1a,#c62828)",
+      color: "white",
+      fontWeight: "800",
+      fontSize: "15px",
+      cursor: "pointer"
+    }
+  }, "\u062D\u0630\u0641"), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setDeleteId(null);
+    },
+    style: {
+      flex: 1,
+      padding: "14px",
+      borderRadius: "12px",
+      border: "1px solid ".concat(T.border),
+      background: T.card2,
+      color: T.sub,
+      fontSize: "15px",
+      cursor: "pointer"
+    }
+  }, "\u0625\u0644\u063A\u0627\u0621")))), /*#__PURE__*/React.createElement("style", null, "@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.8;}} input[type=\"date\"]::-webkit-calendar-picker-indicator{filter:invert(0.7) sepia(1) saturate(3) hue-rotate(5deg);} input::placeholder{color:".concat(T.sub2, ";} *{-webkit-tap-highlight-color:transparent;}")));
+}
+
+// ─── HOME SCREEN ──────────────────────────────────────
+function BMZApp() {
+  var _useState47 = useState(function () {
+      try {
+        var s = JSON.parse(localStorage.getItem(SK_B) || "[]");
+        return s.map(function (b) {
+          return b.startDate ? b : _objectSpread(_objectSpread({}, b), {}, {
+            startDate: b.date,
+            endDate: b.date
+          });
+        });
+      } catch (_unused3) {
+        return [];
+      }
+    }),
+    _useState48 = _slicedToArray(_useState47, 2),
+    bookings = _useState48[0],
+    setBookings = _useState48[1];
+  var _useState49 = useState(function () {
+      try {
+        return JSON.parse(localStorage.getItem(SK_E) || "[]");
+      } catch (_unused4) {
+        return [];
+      }
+    }),
+    _useState50 = _slicedToArray(_useState49, 2),
+    expenses = _useState50[0],
+    setExpenses = _useState50[1];
+  var _useState51 = useState("home"),
+    _useState52 = _slicedToArray(_useState51, 2),
+    screen = _useState52[0],
+    setScreen = _useState52[1];
+  var _useState53 = useState(function () {
+      try {
+        return localStorage.getItem(SK_N) || "BMZ";
+      } catch (_unused5) {
+        return "BMZ";
+      }
+    }),
+    _useState54 = _slicedToArray(_useState53, 2),
+    appName = _useState54[0],
+    setAppName = _useState54[1];
+  var _useState55 = useState(function () {
+      try {
+        return localStorage.getItem(SK_T) || "dark";
+      } catch (_unused6) {
+        return "dark";
+      }
+    }),
+    _useState56 = _slicedToArray(_useState55, 2),
+    themeKey = _useState56[0],
+    setThemeKey = _useState56[1];
+  var _useState57 = useState(false),
+    _useState58 = _slicedToArray(_useState57, 2),
+    showSettings = _useState58[0],
+    setShowSettings = _useState58[1];
+  var _useState59 = useState(""),
+    _useState60 = _slicedToArray(_useState59, 2),
+    tempName = _useState60[0],
+    setTempName = _useState60[1];
+  var T = THEMES[themeKey] || THEMES.dark;
+  var saveSettings = function saveSettings() {
+    var name = tempName.trim() || "BMZ";
+    setAppName(name);
+    try {
+      localStorage.setItem(SK_N, name);
+    } catch (_unused7) {}
+    setShowSettings(false);
+  };
+  var setTheme = function setTheme(k) {
+    setThemeKey(k);
+    try {
+      localStorage.setItem(SK_T, k);
+    } catch (_unused8) {}
+  };
+  var now = new Date();
+  var mk = "".concat(now.getFullYear(), "-").concat(String(now.getMonth() + 1).padStart(2, "0"));
+  var bkThisMonth = bookings.filter(function (b) {
+    return mKey(b.startDate) === mk;
+  });
+  var exThisMonth = expenses.filter(function (e) {
+    var _e$date3;
+    return (_e$date3 = e.date) === null || _e$date3 === void 0 ? void 0 : _e$date3.startsWith(mk);
+  });
+  var mIncome = bkThisMonth.filter(function (b) {
+    return b.confirmed;
+  }).reduce(function (s, b) {
+    return s + (b.paidAmount || 0);
+  }, 0);
+  var mExpense = exThisMonth.reduce(function (s, e) {
+    return s + (e.amount || 0);
+  }, 0);
+  var mNet = mIncome - mExpense;
+  var upcoming = bookings.filter(function (b) {
+    return !isPast(b.endDate || b.startDate) && !b.confirmed;
+  }).length;
+  var tomorrow = bookings.filter(function (b) {
+    return isTmrw(b.startDate, b.endDate) && !b.confirmed;
+  });
+  var inp2 = {
+    background: T.inputBg,
+    border: "1px solid ".concat(T.gold, "44"),
+    borderRadius: "10px",
+    color: T.inputText,
+    padding: "12px 14px",
+    width: "100%",
+    fontSize: "15px",
+    outline: "none",
+    boxSizing: "border-box",
+    fontFamily: "inherit",
+    direction: "rtl"
+  };
+  var lbl2 = {
+    color: T.gold,
+    fontSize: "13px",
+    marginBottom: "6px",
+    display: "block",
+    fontWeight: "600"
+  };
+  return /*#__PURE__*/React.createElement(ThemeCtx.Provider, {
+    value: T
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: "100vh",
+      background: T.bg,
+      backgroundImage: T.radial,
+      fontFamily: "'Segoe UI',Tahoma,sans-serif",
+      direction: "rtl",
+      display: "flex",
+      flexDirection: "column"
+    }
+  }, screen === "bookings" && /*#__PURE__*/React.createElement(BookingsScreen, {
+    bookings: bookings,
+    setBookings: setBookings,
+    onBack: function onBack() {
+      return setScreen("home");
+    }
+  }), screen === "expenses" && /*#__PURE__*/React.createElement(ExpensesScreen, {
+    expenses: expenses,
+    setExpenses: setExpenses,
+    bookings: bookings,
+    onBack: function onBack() {
+      return setScreen("home");
+    }
+  }), screen === "home" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: T.headerBg,
+      borderBottom: "2px solid ".concat(T.gold),
+      padding: "28px 24px 20px",
+      textAlign: "center",
+      boxShadow: T.shadow,
+      position: "relative"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      setTempName(appName);
+      setShowSettings(true);
+    },
+    style: {
+      position: "absolute",
+      top: "16px",
+      left: "16px",
+      background: T.card2,
+      border: "1px solid ".concat(T.gold, "44"),
+      borderRadius: "10px",
+      padding: "8px 12px",
+      color: T.gold,
+      fontSize: "16px",
+      cursor: "pointer"
+    }
+  }, "\u2699\uFE0F"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "44px",
+      fontWeight: "900",
+      letterSpacing: "6px",
+      background: "linear-gradient(135deg,".concat(T.gold, ",").concat(T.gold2, ",").concat(T.gold, ")"),
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+      marginBottom: "6px"
+    }
+  }, appName), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub,
+      fontSize: "13px",
+      letterSpacing: "2px"
+    }
+  }, "\u0646\u0638\u0627\u0645 \u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u0623\u0639\u0645\u0627\u0644"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub2,
+      fontSize: "11px",
+      marginTop: "4px"
+    }
+  }, AM[now.getMonth()], " ", now.getFullYear())), tomorrow.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      margin: "14px 16px 0",
+      background: "linear-gradient(135deg,#2a1a00,#3a2500)",
+      border: "1px solid #ff9800",
+      borderRadius: "12px",
+      padding: "12px 16px",
+      display: "flex",
+      alignItems: "center",
+      gap: "10px",
+      animation: "pulse 2s infinite"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: "22px"
+    }
+  }, "\uD83D\uDD14"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#ffb74d",
+      fontWeight: "700",
+      fontSize: "14px"
+    }
+  }, "\u062A\u0646\u0628\u064A\u0647 \u2014 \u0645\u0648\u0639\u062F \u063A\u062F\u0627\u064B"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#ffe0b2",
+      fontSize: "12px"
+    }
+  }, tomorrow.map(function (b) {
+    return b.name || "عميل";
+  }).join("، ")))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "16px 16px 8px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub,
+      fontSize: "11px",
+      marginBottom: "10px",
+      fontWeight: "600",
+      textAlign: "center"
+    }
+  }, "\u0645\u0644\u062E\u0635 \u0647\u0630\u0627 \u0627\u0644\u0634\u0647\u0631"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr",
+      gap: "8px"
+    }
+  }, [{
+    i: "💰",
+    l: "الإيرادات",
+    v: fc(mIncome),
+    c: T.green
+  }, {
+    i: "💸",
+    l: "المصروفات",
+    v: fc(mExpense),
+    c: T.danger
+  }, {
+    i: mNet >= 0 ? "📈" : "📉",
+    l: "صافي الربح",
+    v: fc(mNet),
+    c: mNet >= 0 ? T.green : T.danger
+  }].map(function (s, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        background: T.statBg,
+        border: "1px solid ".concat(s.c, "33"),
+        borderRadius: "14px",
+        padding: "12px 8px",
+        textAlign: "center"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "20px",
+        marginBottom: "4px"
+      }
+    }, s.i), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: s.c,
+        fontSize: "12px",
+        fontWeight: "800"
+      }
+    }, s.v), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "10px",
+        marginTop: "3px"
+      }
+    }, s.l));
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "12px 16px 30px",
+      flex: 1,
+      display: "flex",
+      flexDirection: "column",
+      gap: "14px",
+      justifyContent: "center"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setScreen("bookings");
+    },
+    style: {
+      background: "linear-gradient(135deg,".concat(T.card, ",").concat(T.card2, ")"),
+      border: "2px solid ".concat(T.gold, "55"),
+      borderRadius: "20px",
+      padding: "24px 22px",
+      cursor: "pointer",
+      textAlign: "right",
+      position: "relative",
+      overflow: "hidden",
+      boxShadow: "0 8px 32px ".concat(T.gold, "11")
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "absolute",
+      top: "-20px",
+      left: "-20px",
+      fontSize: "100px",
+      opacity: "0.04"
+    }
+  }, "\uD83D\uDCC5"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: "16px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: "56px",
+      height: "56px",
+      background: "linear-gradient(135deg,".concat(T.gold, "22,").concat(T.gold, "44)"),
+      border: "2px solid ".concat(T.gold, "66"),
+      borderRadius: "16px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "26px"
+    }
+  }, "\uD83D\uDCC5"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.text,
+      fontWeight: "900",
+      fontSize: "20px"
+    }
+  }, "\u0627\u0644\u062D\u062C\u0648\u0632\u0627\u062A"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub,
+      fontSize: "12px",
+      marginTop: "3px"
+    }
+  }, "\u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u062D\u062C\u0648\u0632\u0627\u062A \u0648\u0627\u0644\u0639\u0645\u0644\u0627\u0621"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "left"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.gold,
+      fontWeight: "900",
+      fontSize: "22px"
+    }
+  }, upcoming), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub,
+      fontSize: "10px"
+    }
+  }, "\u0646\u0634\u0637"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: "14px",
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr",
+      gap: "8px"
+    }
+  }, [{
+    l: "إجمالي",
+    v: bookings.length
+  }, {
+    l: "مكتملة",
+    v: bookings.filter(function (b) {
+      return b.confirmed;
+    }).length
+  }, {
+    l: "هذا الشهر",
+    v: bkThisMonth.length
+  }].map(function (s, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        background: "".concat(T.gold, "11"),
+        borderRadius: "8px",
+        padding: "6px",
+        textAlign: "center"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.gold,
+        fontWeight: "700",
+        fontSize: "14px"
+      }
+    }, s.v), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: T.sub,
+        fontSize: "10px"
+      }
+    }, s.l));
+  }))), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setScreen("expenses");
+    },
+    style: {
+      background: "linear-gradient(135deg,".concat(T.card, ",").concat(T.card2, ")"),
+      border: "2px solid ".concat(T.danger, "55"),
+      borderRadius: "20px",
+      padding: "24px 22px",
+      cursor: "pointer",
+      textAlign: "right",
+      position: "relative",
+      overflow: "hidden"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "absolute",
+      top: "-20px",
+      left: "-20px",
+      fontSize: "100px",
+      opacity: "0.04"
+    }
+  }, "\uD83D\uDCB8"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: "16px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: "56px",
+      height: "56px",
+      background: "".concat(T.danger, "22"),
+      border: "2px solid ".concat(T.danger, "44"),
+      borderRadius: "16px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "26px"
+    }
+  }, "\uD83D\uDCB8"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.text,
+      fontWeight: "900",
+      fontSize: "20px"
+    }
+  }, "\u0627\u0644\u0645\u0635\u0631\u0648\u0641\u0627\u062A"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub,
+      fontSize: "12px",
+      marginTop: "3px"
+    }
+  }, "\u062A\u062A\u0628\u0639 \u0627\u0644\u0645\u0635\u0631\u0648\u0641\u0627\u062A"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "left"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.danger,
+      fontWeight: "900",
+      fontSize: "16px"
+    }
+  }, fc(mExpense)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub,
+      fontSize: "10px"
+    }
+  }, "\u0647\u0630\u0627 \u0627\u0644\u0634\u0647\u0631"))))), /*#__PURE__*/React.createElement(Modal, {
+    open: showSettings,
+    onClose: function onClose() {
+      return setShowSettings(false);
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.gold,
+      fontSize: "19px",
+      fontWeight: "800",
+      marginBottom: "20px",
+      textAlign: "center"
+    }
+  }, "\u2699\uFE0F \u0627\u0644\u0625\u0639\u062F\u0627\u062F\u0627\u062A"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: "20px"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: lbl2
+  }, "\u0627\u0633\u0645 \u0627\u0644\u062A\u0637\u0628\u064A\u0642"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    placeholder: "\u0645\u062B\u0627\u0644: BMZ\u060C \u0634\u0627\u0644\u064A\u0647 \u0627\u0644\u0648\u0631\u0648\u062F...",
+    value: tempName,
+    onChange: function onChange(e) {
+      return setTempName(e.target.value);
+    },
+    style: inp2,
+    maxLength: 20
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: T.sub,
+      fontSize: "11px",
+      marginTop: "6px"
+    }
+  }, "\u0627\u062A\u0631\u0643\u0647 \u0641\u0627\u0631\u063A\u0627\u064B \u0644\u0627\u0633\u062A\u062E\u062F\u0627\u0645 BMZ")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: "20px"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: lbl2
+  }, "\u062B\u064A\u0645 \u0627\u0644\u062A\u0637\u0628\u064A\u0642"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "10px"
+    }
+  }, [{
+    k: "dark",
+    i: "🌙",
+    l: "غامق",
+    bg: "#060e17",
+    card: "#0f1923"
+  }, {
+    k: "light",
+    i: "☀️",
+    l: "فاتح",
+    bg: "#f0f4f8",
+    card: "#ffffff"
+  }].map(function (th) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: th.k,
+      onClick: function onClick() {
+        return setTheme(th.k);
+      },
+      style: {
+        padding: "16px",
+        borderRadius: "14px",
+        border: "2px solid ".concat(themeKey === th.k ? T.gold : T.border),
+        background: th.bg,
+        cursor: "pointer",
+        textAlign: "center"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "28px",
+        marginBottom: "6px"
+      }
+    }, th.i), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: themeKey === th.k ? T.gold : "#888",
+        fontWeight: "700",
+        fontSize: "14px"
+      }
+    }, th.l), themeKey === th.k && /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: "#4caf50",
+        fontSize: "11px",
+        marginTop: "4px"
+      }
+    }, "\u2713 \u0645\u0641\u0639\u0651\u0644"));
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "10px"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: saveSettings,
+    style: {
+      flex: 1,
+      padding: "14px",
+      borderRadius: "12px",
+      border: "none",
+      background: "linear-gradient(135deg,".concat(T.gold, ",").concat(T.gold2, ")"),
+      color: "#0f1923",
+      fontWeight: "800",
+      fontSize: "15px",
+      cursor: "pointer"
+    }
+  }, "\u062D\u0641\u0638 \u0627\u0644\u0627\u0633\u0645"), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setShowSettings(false);
+    },
+    style: {
+      flex: 1,
+      padding: "14px",
+      borderRadius: "12px",
+      border: "1px solid ".concat(T.border),
+      background: T.card2,
+      color: T.sub,
+      fontSize: "15px",
+      cursor: "pointer"
+    }
+  }, "\u0625\u063A\u0644\u0627\u0642")))), /*#__PURE__*/React.createElement("style", null, "@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.8;}} *{-webkit-tap-highlight-color:transparent;} button{font-family:inherit;} input::placeholder{color:".concat(T.sub2, ";}"))));
+}
+
+    ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(BMZApp));
+  } catch(e) {
+    document.getElementById('root').innerHTML = '<div style="color:red;padding:20px;direction:rtl;font-size:16px;">خطأ: ' + e.message + '</div>';
+    console.error(e);
+  }
+});
+</script>
+<script src="js/storage.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
